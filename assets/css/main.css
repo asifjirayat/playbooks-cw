@@ -1,16 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Your custom overrides */
-.prose-content p {
-  @apply mb-6 leading-8 text-ui-text text-lg;
+/* Minimal CW Child Theme Styles */
+body {
+  font-family: inherit;
 }
 
-.prose-content h2 {
-  @apply font-serif text-brand-dark text-2xl font-bold mt-12 mb-4;
+.cw-desktop-nav a {
+  color: #e2e8f0;
+  transition: color 0.2s ease;
 }
 
-.rank-ribbon {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+.cw-desktop-nav a:hover {
+  color: #ffbc00; /* Brand yellow */
 }

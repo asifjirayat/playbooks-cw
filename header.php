@@ -11,26 +11,30 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Lato', 'sans-serif'],
-                        heading: ['Lato', 'sans-serif'],
-                    },
                     colors: {
                         brand: {
                             dark: '#0f172a',
-                            primary: '#3b82f6',
-                            gold: '#F1C40F',
+                            darker: '#020617',
+                            text: '#f8fafc',
+                            yellow: '#FFBC00',
                         },
                         ui: {
-                            bg: '#f8fafc',
-                            surface: '#ffffff',
-                            text: '#334155',
+                            bg: '#020617',
+                            surface: '#0f172a',
+                            border: '#1e293b',
+                            text: '#e2e8f0',
+                            subtext: '#94a3b8',
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        heading: ['Lato', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
+
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +46,8 @@
 
 <body <?php body_class('bg-ui-bg font-sans antialiased'); ?>>
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- Dark Global Header -->
+    <header class="bg-ui-bg/90 backdrop-blur border-b border-ui-border sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
 
             <!-- Logo -->
@@ -52,17 +57,16 @@
                     if (function_exists('the_custom_logo') && has_custom_logo()) {
                         $logo_id = get_theme_mod('custom_logo');
                         $logo_url = wp_get_attachment_image_url($logo_id, 'full');
-                        echo '<img src="' . esc_url($logo_url) . '" class="h-12 w-auto" alt="Playbooks by Concentrated Wisdom Logo">';
+                        echo '<img src="' . esc_url($logo_url) . '" class="h-12 w-auto" alt="Concentrated Wisdom Logo">';
                     } else {
-                        // Fallback if no logo is uploaded
-                        echo '<span class="text-xl font-bold text-brand-dark">Concentrated Wisdom</span>';
+                        echo '<span class="text-xl font-bold text-brand-yellow">Concentrated Wisdom</span>';
                     }
                     ?>
                 </a>
             </div>
 
             <!-- Desktop Menu -->
-            <nav class="hidden md:block">
+            <nav class="hidden md:block cw-desktop-nav">
                 <?php
                 wp_nav_menu([
                     'theme_location' => 'primary_menu',
@@ -70,19 +74,22 @@
                     'menu_class'     => 'flex gap-8 text-ui-text font-medium',
                     'fallback_cb'    => false,
                     'depth'          => 2,
+                    'link_before'    => '',
+                    'link_after'     => '',
                 ]);
                 ?>
             </nav>
 
             <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" class="md:hidden text-2xl text-brand-dark">
+            <button id="mobileMenuBtn" class="md:hidden text-ui-text text-3xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
+
 
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-slate-200">
+        <div id="mobileMenu" class="hidden md:hidden bg-ui-surface border-t border-ui-border">
             <nav class="px-4 py-4">
                 <?php
                 wp_nav_menu([
@@ -95,10 +102,10 @@
                 ?>
             </nav>
         </div>
+
     </header>
 
     <script>
-        // Simple mobile toggle
         const btn = document.getElementById('mobileMenuBtn');
         const menu = document.getElementById('mobileMenu');
 
