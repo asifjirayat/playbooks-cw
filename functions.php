@@ -36,3 +36,28 @@ function cw_child_enqueue_scripts() {
  * Load minimal theme setup
  */
 require_once get_stylesheet_directory() . '/inc/setup.php';
+
+/**
+ * Register WP Menus
+ */
+function cw_register_menus() {
+    register_nav_menus([
+        'primary_menu'   => __('Primary Menu', 'cw'),
+        'footer_menu'    => __('Footer Menu', 'cw'),
+    ]);
+}
+add_action('after_setup_theme', 'cw_register_menus');
+
+/**
+ * Custom Logo
+ */
+function cw_theme_supports() {
+    add_theme_support('custom-logo', [
+        'height'      => 80,
+        'width'       => 120,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ]);
+}
+
+add_action('after_setup_theme', 'cw_theme_supports');
