@@ -42,7 +42,6 @@ require_once get_stylesheet_directory() . '/inc/setup.php';
 /**
  * Load theme modules
  */
-// Load theme modules
 require_once get_stylesheet_directory() . '/inc/setup.php';
 require_once get_stylesheet_directory() . '/inc/helpers.php';
 require_once get_stylesheet_directory() . '/inc/cpt-audiobooks.php';
