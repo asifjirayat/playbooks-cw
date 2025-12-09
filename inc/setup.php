@@ -1,14 +1,37 @@
 <?php
 
-// Minimal theme setup
-add_action( 'after_setup_theme', 'cw_child_setup' );
-function cw_child_setup() {
+/**
+ * Load custom templates from /templates directory.
+ */
 
-    // Enable featured images
-    add_theme_support( 'post-thumbnails' );
+add_filter('template_include', function ($template) {
 
-    // Register a starter menu (optional)
-    register_nav_menus([
-        'primary' => 'Primary Menu'
-    ]);
-}
+    // Path to your template folder inside the theme
+    $theme_dir = get_stylesheet_directory();
+
+    // Single Audiobook Template
+    if (is_singular('audiobook')) {
+        $custom = $theme_dir . '/templates/single-audiobook.php';
+        if (file_exists($custom)) {
+            return $custom;
+        }
+    }
+
+    // Archive: Audiobooks
+    if (is_post_type_archive('audiobook')) {
+        $custom = $theme_dir . '/templates/archive-audiobook.php';
+        if (file_exists($custom)) {
+            return $custom;
+        }
+    }
+
+    // Taxonomy: Topics
+    if (is_tax('topics')) {
+        $custom = $theme_dir . '/templates/taxonomy-terms.php';
+        if (file_exists($custom)) {
+            return $custom;
+        }
+    }
+
+    return $template;
+});
