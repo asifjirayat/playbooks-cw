@@ -17,6 +17,8 @@
                             darker: '#020617',
                             text: '#f8fafc',
                             yellow: '#FFBC00',
+                            primary: '#2563eb',
+                            accent: '#f97316',
                         },
                         ui: {
                             bg: '#020617',

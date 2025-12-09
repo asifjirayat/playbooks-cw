@@ -38,6 +38,19 @@ function cw_child_enqueue_scripts()
  */
 require_once get_stylesheet_directory() . '/inc/setup.php';
 
+
+/**
+ * Load theme modules
+ */
+// Load theme modules
+require_once get_stylesheet_directory() . '/inc/setup.php';
+require_once get_stylesheet_directory() . '/inc/helpers.php';
+require_once get_stylesheet_directory() . '/inc/cpt-audiobooks.php';
+require_once get_stylesheet_directory() . '/inc/membership-gating.php';
+require_once get_stylesheet_directory() . '/inc/tax-terms.php';
+require_once get_stylesheet_directory() . '/inc/bunny-stream.php';
+
+
 /**
  * Deregister default css from hello-elementor
  */
