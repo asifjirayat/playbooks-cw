@@ -48,7 +48,7 @@
 <body <?php body_class('bg-ui-bg font-sans antialiased'); ?>>
 
     <!-- Global Header -->
-    <header class="bg-ui-bg/90 backdrop-blur border-b border-ui-border sticky top-0 z-50">
+    <header class="bg-ui-bg/90 backdrop-blur shadow-lg shadow-black/35 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
 
             <!-- Logo -->
@@ -61,8 +61,7 @@
                         $logo_url = wp_get_attachment_image_url($logo_id, 'full');
                         echo '<img src="' . esc_url($logo_url) . '" class="h-10 md:h-12 w-auto" alt="Concentrated Wisdom Logo">';
                     } else {
-
-                        echo '<span class="text-lg md:text-xl font-semibold text-brand-yellow">Concentrated Wisdom</span>';
+                        echo '<span class="text-xl md:text-2xl font-bold text-brand-yellow leading-none">Concentrated Wisdom</span>';
                     }
                     ?>
 

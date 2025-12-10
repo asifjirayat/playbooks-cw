@@ -1,16 +1,9 @@
-<?php
+<footer class="border-t border-ui-border bg-ui-surface mt-24">
+    <div class="max-w-6xl mx-auto px-4 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-ui-subtext">
 
-/**
- * Theme Footer
- */
-?>
-
-<footer class="border-t border-slate-800 bg-slate-950 mt-16">
-    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-
-        <!-- Left Branding -->
+        <!-- Branding -->
         <div class="flex items-center gap-2">
-            <span class="font-semibold tracking-[0.18em] uppercase text-slate-400">
+            <span class="font-semibold tracking-[0.18em] uppercase text-ui-subtext">
                 Concentrated Wisdom
             </span>
             <span class="script-logo text-sm text-brand-primary font-bold">
@@ -19,16 +12,17 @@
         </div>
 
         <!-- Copyright -->
-        <p class="text-center sm:text-left text-slate-500">
+        <p class="text-center sm:text-left">
             © <?php echo date('Y'); ?> Concentrated Wisdom. All rights reserved.
         </p>
 
         <!-- Footer Menu -->
         <div class="flex gap-4">
-            <a href="#" class="hover:text-slate-300 transition-colors">Privacy</a>
-            <a href="#" class="hover:text-slate-300 transition-colors">Terms</a>
-            <a href="#" class="hover:text-slate-300 transition-colors">Contact</a>
+            <a href="#" class="hover:text-ui-text transition-colors">Privacy</a>
+            <a href="#" class="hover:text-ui-text transition-colors">Terms</a>
+            <a href="#" class="hover:text-ui-text transition-colors">Contact</a>
         </div>
+
     </div>
 </footer>
 
