@@ -7,7 +7,7 @@ $plans = new WP_Query([
 ]);
 
 if ($plans->have_posts()) : ?>
-    <section id="pricing" class="bg-slate-900 border-y border-slate-900 py-16 md:py-24">
+    <section id="pricing" class="border-y border-slate-900 py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-8">
                 <h2 class="text-2xl md:text-3xl font-extrabold mb-3 text-ui-text">One subscription. Every summary and Playbook unlocked.</h2>
