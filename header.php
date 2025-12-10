@@ -37,7 +37,6 @@
         }
     </script>
 
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,22 +47,25 @@
 
 <body <?php body_class('bg-ui-bg font-sans antialiased'); ?>>
 
-    <!-- Dark Global Header -->
+    <!-- Global Header -->
     <header class="bg-ui-bg/90 backdrop-blur border-b border-ui-border sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
 
             <!-- Logo -->
             <div class="flex items-center">
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="inline-block">
+
                     <?php
                     if (function_exists('the_custom_logo') && has_custom_logo()) {
                         $logo_id = get_theme_mod('custom_logo');
                         $logo_url = wp_get_attachment_image_url($logo_id, 'full');
-                        echo '<img src="' . esc_url($logo_url) . '" class="h-12 w-auto" alt="Concentrated Wisdom Logo">';
+                        echo '<img src="' . esc_url($logo_url) . '" class="h-10 md:h-12 w-auto" alt="Concentrated Wisdom Logo">';
                     } else {
-                        echo '<span class="text-xl font-bold text-brand-yellow">Concentrated Wisdom</span>';
+
+                        echo '<span class="text-lg md:text-xl font-semibold text-brand-yellow">Concentrated Wisdom</span>';
                     }
                     ?>
+
                 </a>
             </div>
 
@@ -73,11 +75,9 @@
                 wp_nav_menu([
                     'theme_location' => 'primary_menu',
                     'container'      => false,
-                    'menu_class'     => 'flex gap-8 text-ui-text font-medium',
+                    'menu_class'     => 'flex gap-6 lg:gap-8 text-ui-text font-medium text-sm',
                     'fallback_cb'    => false,
                     'depth'          => 2,
-                    'link_before'    => '',
-                    'link_after'     => '',
                 ]);
                 ?>
             </nav>
@@ -86,7 +86,6 @@
             <button id="mobileMenuBtn" class="md:hidden text-ui-text text-3xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
-
 
         </div>
 
@@ -97,7 +96,7 @@
                 wp_nav_menu([
                     'theme_location' => 'primary_menu',
                     'container'      => false,
-                    'menu_class'     => 'flex flex-col gap-4 text-ui-text font-medium',
+                    'menu_class'     => 'flex flex-col gap-4 text-ui-text font-medium text-base',
                     'fallback_cb'    => false,
                     'depth'          => 1,
                 ]);

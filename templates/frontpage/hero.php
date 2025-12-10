@@ -36,58 +36,46 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
         <div>
 
             <?php if ($eyebrow): ?>
-                <p class="text-xs font-semibold tracking-[0.24em] uppercase text-slate-400 mb-3">
+                <p class="text-xs font-medium tracking-widest uppercase text-ui-subtext mb-3">
                     <?= esc_html($eyebrow); ?>
                 </p>
             <?php endif; ?>
 
             <?php if ($headline): ?>
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight mb-4 text-ui-text">
-                    <?= esc_html($headline); ?><br>
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight text-ui-text mb-6">
+                    <?= esc_html($headline); ?>
                     <?php if ($highlight): ?>
-                        <span class="text-brand-primary"><?= esc_html($highlight); ?></span>
+                        <br><span class="text-brand-primary"><?= esc_html($highlight); ?></span>
                     <?php endif; ?>
                 </h1>
             <?php endif; ?>
 
             <?php if ($subtext): ?>
-                <p class="text-base sm:text-lg text-slate-300 mb-5 max-w-xl">
+                <p class="text-base sm:text-lg leading-relaxed text-ui-subtext mb-6 max-w-xl">
                     <?= esc_html($subtext); ?>
                 </p>
             <?php endif; ?>
 
 
             <!-- BULLETS -->
-            <ul class="space-y-2 text-sm text-slate-300 mb-6">
-                <?php if ($bullet1): ?>
-                    <li class="flex items-start gap-2">
-                        <span class="text-emerald-400 mt-0.5"><i class="fa-solid fa-check"></i></span>
-                        <span><?= esc_html($bullet1); ?></span>
-                    </li>
-                <?php endif; ?>
-
-                <?php if ($bullet2): ?>
-                    <li class="flex items-start gap-2">
-                        <span class="text-emerald-400 mt-0.5"><i class="fa-solid fa-check"></i></span>
-                        <span><?= esc_html($bullet2); ?></span>
-                    </li>
-                <?php endif; ?>
-
-                <?php if ($bullet3): ?>
-                    <li class="flex items-start gap-2">
-                        <span class="text-emerald-400 mt-0.5"><i class="fa-solid fa-check"></i></span>
-                        <span><?= esc_html($bullet3); ?></span>
-                    </li>
-                <?php endif; ?>
+            <ul class="space-y-3 text-sm text-ui-subtext mb-8">
+                <?php foreach ([$bullet1, $bullet2, $bullet3] as $bullet): ?>
+                    <?php if ($bullet): ?>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 mt-0.5"><i class="fa-solid fa-check"></i></span>
+                            <span><?= esc_html($bullet); ?></span>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </ul>
 
 
             <!-- CTA BUTTONS -->
-            <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-wrap items-center gap-4">
 
                 <?php if ($cta1_label && $cta1_url): ?>
                     <a href="<?= esc_url($cta1_url); ?>"
-                        class="inline-flex items-center gap-2 rounded-full bg-brand-primary px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-primary/20 hover:text-white hover:shadow-brand-primary/50 transition">
+                        class="inline-flex items-center gap-2 rounded-full bg-brand-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 transition">
                         <?= esc_html($cta1_label); ?>
                         <i class="fa-solid fa-arrow-down text-xs opacity-80"></i>
                     </a>
@@ -95,16 +83,16 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
 
                 <?php if ($cta2_label): ?>
                     <a href="<?= esc_url($cta2_url ?: '#'); ?>"
-                        class="inline-flex items-center gap-2 rounded-full border border-slate-600 px-5 py-3 text-sm font-semibold text-slate-200 hover:text-white hover:bg-slate-800 transition">
+                        class="inline-flex items-center gap-2 rounded-full border border-slate-600 px-6 py-3 text-sm font-semibold text-ui-text hover:bg-slate-800 transition">
                         <?= esc_html($cta2_label); ?>
-                        <i class="fa-solid fa-play text-[10px]"></i>
+                        <i class="fa-solid fa-play text-[10px] opacity-80"></i>
                     </a>
                 <?php endif; ?>
 
             </div>
 
             <?php if ($footnote): ?>
-                <p class="mt-3 text-xs text-slate-500">
+                <p class="mt-4 text-xs text-slate-500 leading-normal">
                     <?= esc_html($footnote); ?>
                 </p>
             <?php endif; ?>
@@ -116,7 +104,7 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
             <div class="relative w-auto md:max-w-md">
 
                 <?php if ($badge): ?>
-                    <div class="absolute -top-4 -left-4 bg-emerald-500 text-emerald-950 text-[11px] font-bold rounded-full px-3 py-1 shadow-lg">
+                    <div class="absolute -top-4 -left-4 bg-emerald-500 text-emerald-950 text-[11px] font-semibold rounded-full px-3 py-1 shadow-lg">
                         <?= esc_html($badge); ?>
                     </div>
                 <?php endif; ?>
@@ -124,15 +112,15 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
                 <?php if ($hero_img): ?>
                     <img src="<?= esc_url($hero_img['url']); ?>"
                         alt="<?= esc_attr($hero_img['alt']); ?>"
-                        class="w-full h-auto object-cover rounded-xl shadow-xl shadow-black/50 border border-slate-700">
+                        class="w-full h-auto object-cover rounded-xl shadow-xl shadow-black/50 border border-ui-border">
                 <?php endif; ?>
 
-                <div class="absolute -bottom-4 -right-3 bg-slate-900/95 border border-slate-700 rounded-xl px-4 py-3 text-xs shadow-xl max-w-[210px]">
+                <div class="absolute -bottom-4 -right-3 bg-slate-900/95 border border-ui-border rounded-xl px-4 py-3 text-xs shadow-xl max-w-[210px]">
                     <?php if ($tooltip_title): ?>
-                        <p class="font-semibold text-slate-100 mb-1"><?= esc_html($tooltip_title); ?></p>
+                        <p class="font-semibold text-slate-100 mb-2"><?= esc_html($tooltip_title); ?></p>
                     <?php endif; ?>
 
-                    <ul class="space-y-0.5 text-slate-400">
+                    <ul class="space-y-1 text-slate-400 leading-normal">
                         <?php if ($tip1): ?><li>• <?= esc_html($tip1); ?></li><?php endif; ?>
                         <?php if ($tip2): ?><li>• <?= esc_html($tip2); ?></li><?php endif; ?>
                         <?php if ($tip3): ?><li>• <?= esc_html($tip3); ?></li><?php endif; ?>

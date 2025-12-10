@@ -9,11 +9,18 @@ $plans = new WP_Query([
 if ($plans->have_posts()) : ?>
     <section id="pricing" class="border-y border-slate-900 py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl md:text-3xl font-extrabold mb-3 text-ui-text">One subscription. Every summary and Playbook unlocked.</h2>
-                <p class="text-sm text-slate-300">Cancel any time. Keep the Playbooks you have downloaded.</p>
+
+            <!-- Section Header -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-4 text-ui-text">
+                    One subscription. Every summary and Playbook unlocked.
+                </h2>
+                <p class="text-base text-ui-subtext leading-relaxed">
+                    Cancel any time. Keep the Playbooks you have downloaded.
+                </p>
             </div>
 
+            <!-- Pricing Grid -->
             <div class="grid md:grid-cols-2 gap-6 items-stretch">
 
                 <?php while ($plans->have_posts()) : $plans->the_post();
@@ -26,44 +33,54 @@ if ($plans->have_posts()) : ?>
                     $btn_label    = get_field('button_label');
                     $btn_url      = get_field('button_url');
 
-                    $features = explode("\n", trim($features_raw));
+                    $features = array_filter(array_map('trim', explode("\n", trim($features_raw))));
+                    $is_featured = !empty($badge);
                 ?>
 
-                    <?php
-                    $is_featured = !empty($badge);
-
-                    if ($is_featured) : ?>
+                    <!-- Card Wrapper -->
+                    <?php if ($is_featured) : ?>
                         <div class="relative bg-gradient-to-br from-brand-primary to-blue-500 rounded-2xl p-[1px] shadow-xl">
                             <div class="relative bg-slate-950 rounded-2xl p-6 flex flex-col h-full">
                             <?php else : ?>
-                                <div class="relative bg-slate-950 border border-slate-800 rounded-2xl p-6 flex flex-col shadow-xl">
+                                <div class="relative bg-slate-950 border border-slate-800 rounded-2xl p-6 flex flex-col shadow-lg">
                                 <?php endif; ?>
 
+                                <!-- Featured Badge -->
                                 <?php if ($badge) : ?>
-                                    <span class="absolute top-4 right-4 text-[11px] bg-emerald-400/20 text-emerald-300 rounded-full px-2 py-0.5 shadow">
+                                    <span class="absolute top-4 right-4 text-xs bg-emerald-400/20 text-emerald-300 rounded-full px-2 py-0.5 tracking-wider">
                                         <?php echo esc_html($badge); ?>
                                     </span>
                                 <?php endif; ?>
 
-                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em] mb-1">
+                                <!-- Plan Title -->
+                                <p class="text-xs font-semibold text-ui-subtext uppercase tracking-widest mb-2">
                                     <?php the_title(); ?>
                                 </p>
 
-                                <p class="text-3xl font-extrabold mb-1 text-ui-text">
+                                <!-- Price -->
+                                <p class="text-4xl font-bold mb-2 text-ui-text leading-tight">
                                     <?php echo esc_html($price); ?>
-                                    <span class="text-base font-medium text-slate-400"><?php echo esc_html($suffix); ?></span>
+                                    <span class="text-base font-medium text-ui-subtext">
+                                        <?php echo esc_html($suffix); ?>
+                                    </span>
                                 </p>
 
-                                <p class="text-xs text-slate-400 mb-4"><?php echo esc_html($desc); ?></p>
+                                <!-- Description -->
+                                <p class="text-base text-ui-subtext leading-relaxed mb-4">
+                                    <?php echo esc_html($desc); ?>
+                                </p>
 
-                                <ul class="space-y-2 text-xs text-slate-200 mb-6">
+                                <!-- Features -->
+                                <ul class="space-y-3 text-base text-ui-subtext leading-relaxed mb-6">
                                     <?php foreach ($features as $feat) : ?>
                                         <li><?php echo esc_html($feat); ?></li>
                                     <?php endforeach; ?>
                                 </ul>
 
+                                <!-- Button -->
                                 <a href="<?php echo esc_url($btn_url); ?>"
-                                    class="mt-auto inline-flex items-center justify-center rounded-full <?php echo $is_featured ? 'bg-white text-slate-900' : 'bg-slate-200 text-slate-900'; ?> font-semibold text-sm px-4 py-2.5 hover:bg-slate-100 transition">
+                                    class="mt-auto inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition
+                          <?php echo $is_featured ? 'bg-white text-slate-900 hover:bg-slate-100' : 'bg-slate-200 text-slate-900 hover:bg-slate-100'; ?>">
                                     <?php echo esc_html($btn_label); ?>
                                 </a>
 
@@ -73,7 +90,6 @@ if ($plans->have_posts()) : ?>
                         <?php else : ?>
                         </div>
                     <?php endif; ?>
-
 
                 <?php endwhile; ?>
 
