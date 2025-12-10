@@ -1,4 +1,4 @@
-<section class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+<section class="max-w-7xl mx-auto px-4 py-16 md:py-24">
 
     <!-- Section Header -->
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">

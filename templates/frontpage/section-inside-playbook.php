@@ -1,5 +1,5 @@
-<section id="sample-playbook" class="bg-slate-900/60 border-y border-slate-800 py-16 md:py-24">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-14 items-center">
+<section id="sample-playbook" class="border-y border-slate-900 py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-14 items-center">
 
         <!-- LEFT COLUMN: TEXT CONTENT -->
         <div>
