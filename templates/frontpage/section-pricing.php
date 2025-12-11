@@ -59,7 +59,7 @@ if ($plans->have_posts()) : ?>
 
                                 <!-- Price -->
                                 <p class="text-4xl font-bold mb-2 text-ui-text leading-tight">
-                                    <?php echo esc_html($price); ?>
+                                    <span>$</span><?php echo esc_html($price); ?>
                                     <span class="text-base font-medium text-ui-subtext">
                                         <?php echo esc_html($suffix); ?>
                                     </span>
