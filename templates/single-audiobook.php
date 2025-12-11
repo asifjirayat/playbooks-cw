@@ -31,7 +31,7 @@ $is_locked = $requires_premium && !$user_has_premium;
 $topics = wp_get_post_terms(get_the_ID(), 'topics');
 ?>
 
-<main id="content" class="max-w-6xl mx-auto px-4 pb-24">
+<main id="content" class="max-w-7xl mx-auto px-4 pb-24">
 
     <!-- HERO SECTION -->
     <section class="py-12">
@@ -96,10 +96,10 @@ $topics = wp_get_post_terms(get_the_ID(), 'topics');
                     <!-- Workbook Download -->
                     <?php if (!$is_locked && $workbook_url): ?>
                         <a href="<?= esc_url($workbook_url); ?>"
-                            class="w-11 h-11 rounded-full bg-brand.yellow text-black flex items-center justify-center 
+                            class="w-11 h-11 rounded-full bg-brand-yellow text-black flex items-center justify-center 
                                   font-semibold hover:brightness-90 transition"
                             download title="Download Workbook">
-                            <i class="fa-solid fa-file-arrow-down"></i>
+                            <i class="fa-solid fa-download"></i>
                         </a>
                     <?php else: ?>
                         <button class="w-11 h-11 rounded-full bg-slate-800 text-slate-500 border border-ui-border cursor-not-allowed"

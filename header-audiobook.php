@@ -49,7 +49,7 @@
     <!-- AUDIOBOOK HEADER -->
     <header class="w-full bg-ui-bg/90 backdrop-blur-md sticky top-0 z-50 border-b border-ui-border">
 
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 
             <!-- Back to Library -->
             <a href="<?php echo esc_url(home_url('/library')); ?>"
