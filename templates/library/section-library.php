@@ -22,7 +22,7 @@ if (empty($topics) || is_wp_error($topics)) {
         // Query audiobooks for this topic
         $books = new WP_Query([
             'post_type'      => 'audiobook',
-            'posts_per_page' => 8, // preview count
+            'posts_per_page' => 4, // preview count
             'tax_query'      => [
                 [
                     'taxonomy' => 'topics',
