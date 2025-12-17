@@ -32,7 +32,7 @@ if (!$books) {
 $author_counts = [];
 
 foreach ($books as $book_id) {
-    $author = get_field('author', $book_id);
+    $author = get_field('book_author', $book_id);
     if (!$author) continue;
 
     $author_counts[$author] = ($author_counts[$author] ?? 0) + 1;
@@ -55,9 +55,9 @@ $author_counts = array_slice($author_counts, 0, 6, true);
         <ul class="space-y-3">
             <?php foreach ($author_counts as $author => $count): ?>
                 <li>
-                    <a href="<?= esc_url(home_url('/author/' . sanitize_title($author))); ?>"
+                    <a href="<?= esc_url(home_url('/authors/' . sanitize_title($author))); ?>"
                         class="flex items-center justify-between text-sm text-ui-subtext
-                              hover:text-ui-text font-medium transition">
+                              hover:text-ui-text font-medium transition no-underline hover:no-underline">
 
                         <span><?= esc_html($author); ?></span>
 

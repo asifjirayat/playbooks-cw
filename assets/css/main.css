@@ -6,8 +6,11 @@ body {
 .cw-desktop-nav a {
   color: #e2e8f0;
   transition: color 0.2s ease;
+  text-decoration: none;
 }
 
-.cw-desktop-nav a:hover {
+.cw-desktop-nav a:hover,
+.cw-desktop-nav a:focus {
+  text-decoration: none;
   color: #ffbc00; /* Brand yellow */
 }

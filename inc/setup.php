@@ -35,3 +35,33 @@ add_filter('template_include', function ($template) {
 
     return $template;
 });
+
+
+/**
+ * Custom Author Routing: /authors/{slug}
+ */
+add_action('init', function () {
+    add_rewrite_rule(
+        '^authors/([^/]+)/?$',
+        'index.php?cw_author=$matches[1]',
+        'top'
+    );
+});
+
+add_filter('query_vars', function ($vars) {
+    $vars[] = 'cw_author';
+    return $vars;
+});
+
+/**
+ * Load author.php for custom author routes
+ */
+add_action('template_redirect', function () {
+    if (get_query_var('cw_author')) {
+        $template = get_stylesheet_directory() . '/author.php';
+        if (file_exists($template)) {
+            include $template;
+            exit;
+        }
+    }
+});

@@ -33,7 +33,7 @@
                     </h3>
 
                     <!-- Author -->
-                    <?php if ($author = get_field('author')): ?>
+                    <?php if ($author = get_field('book_author')): ?>
                         <p class="text-sm text-ui-subtext mt-1">
                             <?php echo esc_html($author); ?>
                         </p>

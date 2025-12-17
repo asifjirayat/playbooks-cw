@@ -47,7 +47,7 @@ if (empty($topics) || is_wp_error($topics)) {
                 </h2>
 
                 <a href="<?= esc_url(get_term_link($topic)); ?>"
-                    class="text-sm font-semibold text-brand-yellow hover:underline">
+                    class="text-sm font-semibold text-brand-yellow hover:text-brand-yellow/80">
                     View Category <i class="fa-solid fa-arrow-right"></i>
                 </a>
 

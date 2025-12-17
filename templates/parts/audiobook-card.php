@@ -11,7 +11,7 @@ $show_topics = $show_topics ?? true;
 
 // Core fields
 $cover_url = get_field('featured_image_url');
-$author    = get_field('author');
+$author    = get_field('book_author');
 $duration  = get_field('duration');
 
 // Topics

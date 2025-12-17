@@ -33,11 +33,6 @@ function cw_child_enqueue_scripts()
     );
 }
 
-/**
- * Load minimal theme setup
- */
-require_once get_stylesheet_directory() . '/inc/setup.php';
-
 
 /**
  * Load theme modules

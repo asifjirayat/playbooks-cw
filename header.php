@@ -74,7 +74,7 @@
                 wp_nav_menu([
                     'theme_location' => 'primary_menu',
                     'container'      => false,
-                    'menu_class'     => 'flex gap-6 lg:gap-8 text-ui-text font-medium text-sm',
+                    'menu_class'     => 'flex gap-6 lg:gap-8 text-ui-text font-medium text-sm no-underline hover:no-underline',
                     'fallback_cb'    => false,
                     'depth'          => 2,
                 ]);
