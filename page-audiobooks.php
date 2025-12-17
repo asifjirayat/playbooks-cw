@@ -9,7 +9,7 @@
 get_header();
 
 // Pagination
-$paged = max(1, get_query_var('paged'), get_query_var('page'));
+$paged = max(1, get_query_var('paged') ?: get_query_var('page'));
 ?>
 
 <main class="pb-24">
@@ -61,7 +61,7 @@ $paged = max(1, get_query_var('paged'), get_query_var('page'));
                                 'hide_empty' => true,
                             ]);
 
-                            if ($topics && !is_wp_error($topics)):
+                            if (!empty($topics) && !is_wp_error($topics)):
                                 foreach ($topics as $topic): ?>
                                     <a href="<?php echo esc_url(get_term_link($topic)); ?>"
                                         class="px-3 py-1 text-xs font-semibold rounded-full
@@ -86,6 +86,7 @@ $paged = max(1, get_query_var('paged'), get_query_var('page'));
                     'post_type'      => 'audiobook',
                     'posts_per_page' => 20,
                     'paged'          => $paged,
+                    'no_found_rows'  => false,
                 ]);
                 ?>
 
@@ -116,6 +117,8 @@ $paged = max(1, get_query_var('paged'), get_query_var('page'));
                             'total'   => $query->max_num_pages,
                             'current' => $paged,
                             'type'    => 'list',
+                            'prev_text'  => '<i class="fa-solid fa-chevron-left"></i>',
+                            'next_text'  => '<i class="fa-solid fa-chevron-right"></i>',
                         ]);
                         ?>
                     </div>

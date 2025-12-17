@@ -5,6 +5,7 @@
  *
  * Optional variables before include:
  * @var bool $show_topics  Whether to show topic pills (default: true)
+ * @var bool $show_author Whether to show author name (default: true)
  */
 
 $show_topics = $show_topics ?? true;
