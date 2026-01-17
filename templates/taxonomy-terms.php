@@ -15,12 +15,13 @@ if (!$term || is_wp_error($term)) {
 }
 
 // Pagination
-$paged = max(1, get_query_var('paged'));
+$paged = max(1, get_query_var('paged') ?: get_query_var('page'));
 
 $query = new WP_Query([
     'post_type'      => 'audiobook',
     'posts_per_page' => 20,
     'paged'          => $paged,
+    'no_found_rows'  => false,
     'tax_query'      => [
         [
             'taxonomy' => 'topics',
@@ -68,7 +69,7 @@ $query = new WP_Query([
 
             <?php if ($query->have_posts()): ?>
 
-                <!-- SIDEBAR (desktop only) -->
+                <!-- SIDEBAR -->
                 <div class="col-span-12 lg:col-span-3 self-start sticky top-28">
                     <?php get_template_part('templates/parts/sidebar-topic'); ?>
                 </div>
@@ -82,8 +83,9 @@ $query = new WP_Query([
                         while ($query->have_posts()):
                             $query->the_post();
 
-                            // Hide topic pills in category context
+                            // Card context
                             $show_topics = false;
+                            $show_author = true;
 
                             get_template_part('templates/parts/audiobook-card');
                         endwhile;
@@ -97,9 +99,11 @@ $query = new WP_Query([
                     <div class="mt-16 flex justify-center">
                         <?php
                         echo paginate_links([
-                            'total'   => $query->max_num_pages,
-                            'current' => $paged,
-                            'type'    => 'list',
+                            'total'      => $query->max_num_pages,
+                            'current'    => $paged,
+                            'type'       => 'list',
+                            'prev_text'  => '<span class="sr-only">Previous</span><i class="fa-solid fa-chevron-left"></i>',
+                            'next_text'  => '<span class="sr-only">Next</span><i class="fa-solid fa-chevron-right"></i>',
                         ]);
                         ?>
                     </div>
@@ -109,7 +113,7 @@ $query = new WP_Query([
             <?php else: ?>
 
                 <p class="col-span-12 text-ui-subtext text-center">
-                    No audiobooks found in this category.
+                    No audiobooks found in this topic.
                 </p>
 
             <?php endif; ?>

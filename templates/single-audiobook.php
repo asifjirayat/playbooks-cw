@@ -7,45 +7,50 @@
 get_header('audiobook');
 
 // ACF fields
-$cover_url        = get_field('featured_image_url') ?: '';
-$audio_url        = get_field('audio_file_url') ?: '';
-$workbook_url     = get_field('workbook_file_url') ?: '';
-$short_summary    = get_field('short_summary') ?: '';
-$long_summary     = get_field('long_summary') ?: '';
-$narrator         = get_field('narrator') ?: 'Unknown Narrator';
-$author           = get_field('book_author') ?: 'Unknown Author';
-$duration         = get_field('duration') ?: '—';
-$rank             = get_field('rank') ?: '';
-$highlight_quote  = get_field('highlight_quote') ?: '';
-$key_takeaways    = get_field('key_takeaways') ?: '';
-$requires_premium = get_field('membership_required');
+$book_cover_url      = get_field('book_cover_url') ?: '';
+$audio_summary_url   = get_field('audio_summary_url') ?: '';
+$playbook_url        = get_field('playbook_url') ?: '';
+$whats_in_it_for_you = get_field('whats_in_it_for_you') ?: '';
+$long_summary        = get_field('long_summary') ?: '';
+$author              = get_field('book_author') ?: 'Unknown Author';
+$listening_time      = get_field('listening_time') ?: '';
+$rank                = get_field('rank') ?: '';
+$best_quote          = get_field('best_quote') ?: '';
+$key_takeaways       = get_field('key_takeaways') ?: '';
+$concepts_raw        = get_field('concepts') ?: '';
+$requires_premium    = get_field('membership_required');
 
-// Membership: premium = level 2 or 3
-$premium_ids = array(2, 3);
+// Membership
+$premium_ids = [2, 3];
 $user_has_premium = function_exists('pmpro_hasMembershipLevel')
     && pmpro_hasMembershipLevel($premium_ids);
 
 $is_locked = $requires_premium && !$user_has_premium;
 
-// Taxonomy: Topics
+// Topics (taxonomy)
 $topics = wp_get_post_terms(get_the_ID(), 'topics');
+$primary_topic = !empty($topics) && !is_wp_error($topics) ? $topics[0] : null;
+
+// Concepts → split into pills (comma or line separated)
+$concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concepts_raw)));
 ?>
 
 <main id="content" class="max-w-7xl mx-auto px-4 pb-24">
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="py-12">
         <div class="grid md:grid-cols-2 gap-12 items-center">
 
-            <!-- Left Column -->
+            <!-- LEFT COLUMN -->
             <div>
 
-                <!-- Topic Chips -->
-                <?php if ($topics): ?>
+                <!-- Concepts as pills (above title) -->
+                <?php if ($concepts): ?>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <?php foreach ($topics as $t): ?>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-ui-surface/40 text-ui-text border border-ui-border">
-                                <?= esc_html($t->name); ?>
+                        <?php foreach ($concepts as $concept): ?>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold
+                                         bg-ui-surface/40 text-ui-text border border-ui-border">
+                                <?= esc_html(ucwords($concept)); ?>
                             </span>
                         <?php endforeach; ?>
                     </div>
@@ -56,54 +61,49 @@ $topics = wp_get_post_terms(get_the_ID(), 'topics');
                     <?php the_title(); ?>
                 </h1>
 
-                <!-- Author / Narrator -->
+                <!-- Author + Listening Time -->
                 <p class="text-ui-subtext font-medium text-sm mb-4">
                     By <span class="text-ui-text font-semibold"><?= esc_html($author); ?></span>
-                    &middot; Narrated by <?= esc_html($narrator); ?>
-                    &middot; <?= esc_html($duration); ?>
+                    <?php if ($listening_time): ?>
+                        · Listening Time <?= esc_html($listening_time); ?> Minutes
+                    <?php endif; ?>
                 </p>
 
-                <!-- Short Summary -->
-                <?php if ($short_summary): ?>
+                <!-- What's in it for you -->
+                <?php if ($whats_in_it_for_you): ?>
                     <p class="text-ui-subtext font-medium leading-relaxed mb-6">
-                        <?= esc_html($short_summary); ?>
+                        <?= esc_html($whats_in_it_for_you); ?>
                     </p>
                 <?php endif; ?>
 
                 <!-- CTA Buttons -->
                 <div class="flex items-center gap-4 mb-6">
 
-                    <!-- Play Button -->
                     <button
                         class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold 
-                               <?php if ($is_locked): ?>
-                                   bg-slate-800 text-slate-500 cursor-not-allowed
-                               <?php else: ?>
-                                   bg-brand-primary text-white shadow-lg shadow-brand-primary/20 hover:brightness-110
-                               <?php endif; ?>
+                               <?= $is_locked
+                                    ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                                    : 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20 hover:brightness-110'; ?>
                                transition"
                         id="playInlineTrigger">
                         <i class="fa-solid fa-play"></i>
                         <span>Listen</span>
                     </button>
 
-                    <!-- Bookmark -->
                     <button class="w-11 h-11 rounded-full bg-ui-surface/30 border border-ui-border text-ui-text 
                                    hover:bg-ui-surface/50 transition" id="bookmarkBtnTop">
                         <i class="fa-regular fa-bookmark"></i>
                     </button>
 
-                    <!-- Workbook Download -->
-                    <?php if (!$is_locked && $workbook_url): ?>
-                        <a href="<?= esc_url($workbook_url); ?>"
+                    <?php if (!$is_locked && $playbook_url): ?>
+                        <a href="<?= esc_url($playbook_url); ?>"
                             class="w-11 h-11 rounded-full bg-brand-yellow text-black flex items-center justify-center 
                                   font-semibold hover:brightness-90 transition"
                             download title="Download Workbook">
                             <i class="fa-solid fa-download"></i>
                         </a>
                     <?php else: ?>
-                        <button class="w-11 h-11 rounded-full bg-slate-800 text-slate-500 border border-ui-border cursor-not-allowed"
-                            title="Premium required">
+                        <button class="w-11 h-11 rounded-full bg-slate-800 text-slate-500 border border-ui-border cursor-not-allowed">
                             <i class="fa-solid fa-lock"></i>
                         </button>
                     <?php endif; ?>
@@ -117,43 +117,49 @@ $topics = wp_get_post_terms(get_the_ID(), 'topics');
 
             </div>
 
-            <!-- Right Column: Cover -->
+            <!-- RIGHT COLUMN -->
             <div class="flex justify-center md:justify-end relative">
-                <div class="relative inline-block">
+                <div class="relative inline-block text-center">
+
                     <?php if ($rank): ?>
                         <span class="absolute top-2 left-2 -translate-x-1/4 -translate-y-1/4 
-                         bg-brand-yellow text-black text-[12px] font-semibold rounded-full px-3 py-1 shadow-lg z-20
-                         sm:top-3 sm:left-3 sm:-translate-x-1/2 sm:-translate-y-1/2">
-                            #<?= esc_html($rank); ?>
+                                     bg-brand-yellow text-black text-[12px] font-semibold rounded-full px-3 py-1 shadow-lg z-20">
+                            Rank #<?= esc_html($rank); ?>
                         </span>
                     <?php endif; ?>
 
-                    <?php if ($cover_url): ?>
-                        <img src="<?= esc_url($cover_url); ?>"
+                    <?php if ($book_cover_url): ?>
+                        <img src="<?= esc_url($book_cover_url); ?>"
                             alt="<?php the_title_attribute(); ?> cover"
-                            class="w-56 md:w-72 rounded-xl shadow-xl border border-ui-border object-contain block">
-                    <?php else : ?>
+                            class="w-56 md:w-72 rounded-xl shadow-xl border border-ui-border object-contain block mx-auto">
+                    <?php else: ?>
                         <div class="w-56 md:w-72 h-80 bg-ui-surface rounded-xl border border-ui-border flex items-center justify-center text-ui-subtext">
                             No cover
                         </div>
                     <?php endif; ?>
+
+                    <!-- Primary Topic (clickable, under image) -->
+                    <?php if ($primary_topic): ?>
+                        <a href="<?= esc_url(get_term_link($primary_topic)); ?>"
+                            class="inline-block mt-3 text-xs font-semibold text-brand-yellow hover:underline">
+                            <?= esc_html($primary_topic->name); ?>
+                        </a>
+                    <?php endif; ?>
+
                 </div>
             </div>
-
 
         </div>
     </section>
 
-    <!-- INLINE PLAYER (moved to sit under the cover) -->
+    <!-- INLINE PLAYER -->
     <section class="my-8 md:my-12">
         <?php
-        // Pass audio URL + lock state to player partial
-        set_query_var('cw_audio_url', $audio_url);
+        set_query_var('cw_audio_url', $audio_summary_url);
         set_query_var('cw_locked', $is_locked);
         get_template_part('templates/parts/player');
         ?>
     </section>
-
 
     <!-- KEY TAKEAWAYS -->
     <?php if ($key_takeaways): ?>
@@ -161,36 +167,33 @@ $topics = wp_get_post_terms(get_the_ID(), 'topics');
             <h2 class="text-xl font-bold text-ui-text mb-4">Key Takeaways</h2>
 
             <ul class="space-y-3 text-ui-subtext font-medium">
-                <?php
-                $lines = preg_split('/\r\n|\r|\n/', $key_takeaways);
-                foreach ($lines as $line):
-                    if (trim($line)):
-                ?>
+                <?php foreach (preg_split('/\r\n|\r|\n/', $key_takeaways) as $line):
+                    if (trim($line)): ?>
                         <li class="flex gap-3">
                             <span class="text-emerald-400 mt-1"><i class="fa-solid fa-check"></i></span>
                             <span><?= esc_html($line); ?></span>
                         </li>
-                <?php
-                    endif;
-                endforeach;
-                ?>
+                <?php endif;
+                endforeach; ?>
             </ul>
         </section>
     <?php endif; ?>
 
     <!-- HIGHLIGHT QUOTE -->
-    <?php if ($highlight_quote): ?>
+    <?php if ($best_quote): ?>
         <section class="my-12">
-            <blockquote class="border-l-4 border-brand.yellow pl-6 py-2 text-xl italic text-ui-text">
-                “<?= esc_html($highlight_quote); ?>”
+            <blockquote class="border-l-4 border-brand-yellow pl-6 py-2 text-xl italic text-ui-text">
+                “<?= esc_html($best_quote); ?>”
             </blockquote>
         </section>
     <?php endif; ?>
 
     <!-- LONG SUMMARY -->
-    <article class="prose prose-invert max-w-none leading-relaxed text-ui-subtext">
-        <?= wp_kses_post($long_summary); ?>
-    </article>
+    <?php if ($long_summary): ?>
+        <article class="prose prose-invert max-w-none leading-relaxed text-ui-subtext">
+            <?= wp_kses_post($long_summary); ?>
+        </article>
+    <?php endif; ?>
 
     <!-- WORKBOOK CTA -->
     <section class="mt-16">
@@ -202,8 +205,8 @@ $topics = wp_get_post_terms(get_the_ID(), 'topics');
                     Get Premium Access
                 </a>
             </div>
-        <?php elseif ($workbook_url): ?>
-            <a href="<?= esc_url($workbook_url); ?>"
+        <?php elseif ($playbook_url): ?>
+            <a href="<?= esc_url($playbook_url); ?>"
                 class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-yellow text-black font-semibold hover:brightness-95 shadow-md transition"
                 download>
                 Download Workbook <i class="fa-solid fa-download"></i>

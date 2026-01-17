@@ -1,22 +1,18 @@
 <?php
 
 /**
- * Player Partial - WaveSurfer continuous waveform
+ * Player Partial – WaveSurfer (working baseline)
  * Expects:
  *  - cw_audio_url (string)
  *  - cw_locked (bool)
- *
- * Notes:
- *  - Uses WaveSurfer.js via CDN (unpkg). If you prefer to self-host, swap the script tag.
- *  - If WaveSurfer fails to load or audio is missing, the player falls back to disabled controls.
  */
 
 $audio_url = get_query_var('cw_audio_url');
 $is_locked = get_query_var('cw_locked');
 ?>
 
-<!-- include WaveSurfer (UMD build) -->
-<script src="https://unpkg.com/wavesurfer.js@7"></script>
+<!-- WaveSurfer UMD (GLOBAL BUILD – REQUIRED) -->
+<script src="https://unpkg.com/wavesurfer.js@7.12.1/dist/wavesurfer.min.js"></script>
 
 <div id="cw-inline-player" class="bg-ui-surface/40 border border-ui-border rounded-xl p-5 mt-6">
     <div class="flex items-center gap-4">
@@ -24,23 +20,17 @@ $is_locked = get_query_var('cw_locked');
         <!-- Play/Pause Button -->
         <button id="cw-inline-play"
             class="w-12 h-12 rounded-full flex items-center justify-center text-white
-            <?php if ($is_locked): ?>
-              bg-slate-800 text-slate-500 cursor-not-allowed
-            <?php else: ?>
-              bg-brand-primary hover:brightness-110
-            <?php endif; ?>
-            transition"
+            <?= $is_locked ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-brand-primary hover:brightness-110' ?>"
             aria-label="Play/Pause">
-            <i class="fa-solid fa-play" id="cw-inline-icon" aria-hidden="true"></i>
+            <i class="fa-solid fa-play" id="cw-inline-icon"></i>
         </button>
 
-        <!-- Waveform container (WaveSurfer will draw inside) -->
+        <!-- Waveform -->
         <div class="flex-1">
-            <div class="flex items-center justify-between text-xs text-ui-subtext font-medium mb-2 w-full">
+            <div class="flex items-center justify-between text-xs text-ui-subtext font-medium mb-2">
                 <span>Audio Summary</span>
-                <span id="cw-inline-duration" class="text-ui-subtext text-xs"><?php echo esc_html($duration ?? ''); ?></span>
+                <span id="cw-inline-duration" class="text-ui-subtext text-xs"></span>
             </div>
-
             <div id="cw-waveform" class="w-full h-8 rounded-md overflow-hidden"></div>
         </div>
 
@@ -53,7 +43,7 @@ $is_locked = get_query_var('cw_locked');
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
 
         <div class="flex items-center gap-3">
-            <button id="cw-sticky-toggle" class="text-ui-text text-2xl" aria-label="Toggle player">
+            <button id="cw-sticky-toggle" class="text-ui-text text-2xl">
                 <i class="fa-solid fa-chevron-up"></i>
             </button>
 
@@ -64,242 +54,120 @@ $is_locked = get_query_var('cw_locked');
         </div>
 
         <div class="flex items-center gap-4">
-            <button id="cw-sticky-back" class="text-ui-subtext hover:text-ui-text" aria-label="Rewind 10s">
+            <button id="cw-sticky-back" class="text-ui-subtext hover:text-ui-text">
                 <i class="fa-solid fa-backward-15"></i>
             </button>
 
             <button id="cw-sticky-play"
-                class="w-10 h-10 bg-brand-primary text-white rounded-full flex items-center justify-center hover:brightness-110 transition"
-                aria-label="Play/Pause (sticky)">
-                <i class="fa-solid fa-play" id="cw-sticky-icon" aria-hidden="true"></i>
+                class="w-10 h-10 bg-brand-primary text-white rounded-full flex items-center justify-center hover:brightness-110">
+                <i class="fa-solid fa-play" id="cw-sticky-icon"></i>
             </button>
 
-            <button id="cw-sticky-forward" class="text-ui-subtext hover:text-ui-text" aria-label="Forward 10s">
+            <button id="cw-sticky-forward" class="text-ui-subtext hover:text-ui-text">
                 <i class="fa-solid fa-forward-15"></i>
             </button>
         </div>
     </div>
 
-    <div class="h-1 bg-ui-bg w-full cursor-pointer group">
-        <div id="cw-sticky-progress" class="h-full bg-brand-primary w-0 relative group-hover:h-2 transition-all"></div>
+    <div class="h-1 bg-ui-bg w-full">
+        <div id="cw-sticky-progress" class="h-full bg-brand-primary w-0"></div>
     </div>
 </div>
 
-<!-- Fallback audio element (hidden) - only used if WaveSurfer is not available -->
 <?php if (!$is_locked && $audio_url): ?>
-    <audio id="cw-audio-fallback" src="<?= esc_url($audio_url); ?>" preload="metadata" style="display:none"></audio>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            if (typeof WaveSurfer === 'undefined') {
+                console.error('WaveSurfer not loaded');
+                return;
+            }
+
+            const audioUrl = '<?= esc_js($audio_url); ?>';
+
+            const heroBtn = document.getElementById('playInlineTrigger');
+            const inlineBtn = document.getElementById('cw-inline-play');
+            const inlineIcon = document.getElementById('cw-inline-icon');
+            const stickyBtn = document.getElementById('cw-sticky-play');
+            const stickyIcon = document.getElementById('cw-sticky-icon');
+            const stickyPanel = document.getElementById('cw-sticky-player');
+            const toggleSticky = document.getElementById('cw-sticky-toggle');
+            const progressBar = document.getElementById('cw-sticky-progress');
+            const durationEl = document.getElementById('cw-inline-duration');
+
+            const ws = WaveSurfer.create({
+                container: '#cw-waveform',
+                waveColor: 'rgba(255,255,255,0.15)',
+                progressColor: '#FFBC00',
+                cursorWidth: 0,
+                height: 32,
+                normalize: true,
+                responsive: true
+            });
+
+            ws.load(audioUrl);
+
+            function syncIcons(isPlaying) {
+                [inlineIcon, stickyIcon, heroBtn?.querySelector('i')].forEach(icon => {
+                    if (!icon) return;
+                    icon.classList.toggle('fa-play', !isPlaying);
+                    icon.classList.toggle('fa-pause', isPlaying);
+                });
+            }
+
+            ws.on('ready', () => {
+                const dur = ws.getDuration();
+                if (durationEl && dur) {
+                    const m = Math.floor(dur / 60);
+                    const s = Math.floor(dur % 60).toString().padStart(2, '0');
+                    durationEl.textContent = `${m}:${s}`;
+                }
+            });
+
+            ws.on('play', () => {
+                syncIcons(true);
+                stickyPanel.classList.remove('translate-y-full');
+            });
+
+            ws.on('pause', () => syncIcons(false));
+
+            ws.on('audioprocess', () => {
+                const p = ws.getCurrentTime() / ws.getDuration();
+                progressBar.style.width = `${p * 100}%`;
+            });
+
+            [inlineBtn, stickyBtn, heroBtn].forEach(btn => {
+                btn && btn.addEventListener('click', () => ws.playPause());
+            });
+
+            toggleSticky.addEventListener('click', () => {
+                stickyPanel.classList.toggle('translate-y-full');
+            });
+
+            document.getElementById('cw-sticky-back')
+                ?.addEventListener('click', () => ws.seekTo(Math.max(0, ws.getCurrentTime() - 10) / ws.getDuration()));
+
+            document.getElementById('cw-sticky-forward')
+                ?.addEventListener('click', () => ws.seekTo(Math.min(ws.getDuration(), ws.getCurrentTime() + 10) / ws.getDuration()));
+
+        });
+    </script>
 <?php endif; ?>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const locked = <?= $is_locked ? 'true' : 'false'; ?>;
-        const audioUrl = <?= $audio_url ? "'" . esc_js($audio_url) . "'" : 'null'; ?>;
-
-        // Elements
-        const heroPlayBtn = document.getElementById('playInlineTrigger'); // hero button
-        const inlineBtn = document.getElementById('cw-inline-play');
-        const inlineIcon = document.getElementById('cw-inline-icon');
-        const stickyBtn = document.getElementById('cw-sticky-play');
-        const stickyIcon = document.getElementById('cw-sticky-icon');
-        const stickyPanel = document.getElementById('cw-sticky-player');
-        const toggleSticky = document.getElementById('cw-sticky-toggle');
-        const progressBar = document.getElementById('cw-sticky-progress');
-        const backBtn = document.getElementById('cw-sticky-back');
-        const forwardBtn = document.getElementById('cw-sticky-forward');
-        const durationEl = document.getElementById('cw-inline-duration');
-
-        // Expose global toggle for external controls
-        window.cwTogglePlay = () => {
-            if (waveSurferInstance) waveSurferInstance.playPause();
-        };
-
-        // Prepare a fallback in case WaveSurfer fails to load
-        const fallbackAudio = document.getElementById('cw-audio-fallback');
-
-        // waveSurferInstance will be the WaveSurfer object when ready
-        let waveSurferInstance = null;
-        let wsReady = false;
-
-        // Helper to set icons
-        function setIconsPlayingState(isPlaying) {
-            if (inlineIcon) {
-                if (isPlaying) inlineIcon.classList.replace('fa-play', 'fa-pause');
-                else inlineIcon.classList.replace('fa-pause', 'fa-play');
-            }
-            if (stickyIcon) {
-                if (isPlaying) stickyIcon.classList.replace('fa-play', 'fa-pause');
-                else stickyIcon.classList.replace('fa-pause', 'fa-play');
-            }
-            if (heroPlayBtn) {
-                const heroIcon = heroPlayBtn.querySelector('i');
-                if (heroIcon) {
-                    if (isPlaying) heroIcon.classList.replace('fa-play', 'fa-pause');
-                    else heroIcon.classList.replace('fa-pause', 'fa-play');
-                }
-            }
-        }
-
-        // If locked or no audio URL, disable play handlers
-        if (locked || !audioUrl) {
-            if (heroPlayBtn) {
-                heroPlayBtn.addEventListener('click', () => {
-                    // redirect to membership if locked, or do nothing if no audio
-                    if (locked) window.location.href = '/membership';
-                });
-            }
-            // Make inline & sticky buttons no-op (or show membership page)
-            if (inlineBtn) inlineBtn.addEventListener('click', () => {
-                if (locked) window.location.href = '/membership';
-            });
-            if (stickyBtn) stickyBtn.addEventListener('click', () => {
-                if (locked) window.location.href = '/membership';
-            });
-            // disable back/forward
-            if (backBtn) backBtn.addEventListener('click', (e) => e.preventDefault());
-            if (forwardBtn) forwardBtn.addEventListener('click', (e) => e.preventDefault());
-            return;
-        }
-
-        // Try to initialize WaveSurfer. If not available, fallback to native <audio>
-        function initWaveSurfer() {
-            try {
-                if (!window.WaveSurfer) throw new Error('WaveSurfer not found');
-
-                // create instance
-                waveSurferInstance = WaveSurfer.create({
-                    container: '#cw-waveform',
-                    waveColor: 'rgba(255,255,255,0.12)', // light/low contrast
-                    progressColor: 'rgba(255,188,0,0.92)', // brand yellow
-                    backend: 'WebAudio',
-                    cursorWidth: 0,
-                    normalize: true,
-                    responsive: true,
-                    height: 48, // px, will be clipped by container h-8 if smaller; adjust if you want taller waveform
-                    partialRender: true,
-                    scrollParent: false
-                });
-
-                // load audio (can be a Bunny signed URL later)
-                waveSurferInstance.load(audioUrl);
-
-                waveSurferInstance.on('ready', () => {
-                    wsReady = true;
-
-                    // show duration (mm:ss)
-                    const dur = waveSurferInstance.getDuration();
-                    if (durationEl && dur && !isNaN(dur)) {
-                        const min = Math.floor(dur / 60);
-                        const sec = Math.floor(dur % 60).toString().padStart(2, '0');
-                        durationEl.textContent = `${min}:${sec}`;
-                    }
-
-                    // bind play/pause icon sync
-                    waveSurferInstance.on('play', () => {
-                        setIconsPlayingState(true);
-                        stickyPanel.classList.remove('translate-y-full');
-                    });
-                    waveSurferInstance.on('pause', () => {
-                        setIconsPlayingState(false);
-                    });
-                    waveSurferInstance.on('finish', () => {
-                        setIconsPlayingState(false);
-                        if (progressBar) progressBar.style.width = '100%'; // ended
-                    });
-
-                    // update progress bar on audioprocess/timeupdate
-                    waveSurferInstance.on('audioprocess', () => {
-                        const cur = waveSurferInstance.getCurrentTime();
-                        const dur = waveSurferInstance.getDuration() || 1;
-                        if (progressBar) progressBar.style.width = ((cur / dur) * 100) + '%';
-                    });
-                });
-
-                // Attach UI controls
-                inlineBtn.addEventListener('click', (e) => {
-                    waveSurferInstance.playPause();
-                });
-
-                stickyBtn.addEventListener('click', (e) => {
-                    waveSurferInstance.playPause();
-                });
-
-                heroPlayBtn && heroPlayBtn.addEventListener('click', (e) => {
-                    waveSurferInstance.playPause();
-                });
-
-                // back/forward seeking (10s)
-                backBtn && backBtn.addEventListener('click', () => {
-                    const t = Math.max(0, waveSurferInstance.getCurrentTime() - 10);
-                    waveSurferInstance.seekTo(t / waveSurferInstance.getDuration());
-                });
-                forwardBtn && forwardBtn.addEventListener('click', () => {
-                    const t = Math.min(waveSurferInstance.getDuration(), waveSurferInstance.getCurrentTime() + 10);
-                    waveSurferInstance.seekTo(t / waveSurferInstance.getDuration());
-                });
-
-            } catch (err) {
-                // WaveSurfer initialization failed — fallback
-                console.warn('WaveSurfer init failed:', err);
-                initFallbackAudio();
-            }
-        } // initWaveSurfer
-
-        // Fallback: use native audio element for playback & simple progress update
-        function initFallbackAudio() {
-            if (!fallbackAudio) return;
-            // hero control
-            heroPlayBtn && heroPlayBtn.addEventListener('click', () => {
-                if (fallbackAudio.paused) fallbackAudio.play();
-                else fallbackAudio.pause();
-            });
-            // inline & sticky
-            inlineBtn && inlineBtn.addEventListener('click', () => {
-                if (fallbackAudio.paused) fallbackAudio.play();
-                else fallbackAudio.pause();
-            });
-            stickyBtn && stickyBtn.addEventListener('click', () => {
-                if (fallbackAudio.paused) fallbackAudio.play();
-                else fallbackAudio.pause();
-            });
-
-            // sync icons
-            fallbackAudio.addEventListener('play', () => setIconsPlayingState(true));
-            fallbackAudio.addEventListener('pause', () => setIconsPlayingState(false));
-            fallbackAudio.addEventListener('timeupdate', () => {
-                if (!fallbackAudio.duration || isNaN(fallbackAudio.duration)) return;
-                const p = fallbackAudio.currentTime / fallbackAudio.duration;
-                if (progressBar) progressBar.style.width = (p * 100) + '%';
-            });
-            fallbackAudio.addEventListener('loadedmetadata', () => {
-                if (fallbackAudio.duration && durationEl) {
-                    const min = Math.floor(fallbackAudio.duration / 60);
-                    const sec = Math.floor(fallbackAudio.duration % 60).toString().padStart(2, '0');
-                    durationEl.textContent = `${min}:${sec}`;
-                }
-            });
-
-            // back/forward
-            backBtn && backBtn.addEventListener('click', () => fallbackAudio.currentTime = Math.max(0, fallbackAudio.currentTime - 10));
-            forwardBtn && forwardBtn.addEventListener('click', () => fallbackAudio.currentTime = Math.min(fallbackAudio.duration, fallbackAudio.currentTime + 10));
-        }
-
-        // Sticky panel toggle
-        if (toggleSticky) toggleSticky.addEventListener('click', () => stickyPanel.classList.toggle('translate-y-full'));
-
-        // Initialize WaveSurfer (preferred)
-        initWaveSurfer();
-
-    }); // DOMContentLoaded
-</script>
+<?php if ($is_locked): ?>
+    <script>
+        document.getElementById('cw-inline-play')?.addEventListener('click', () => {
+            window.location.href = '/membership';
+        });
+    </script>
+<?php endif; ?>
 
 <style>
-    /* keep the waveform clipped to the inline player height and soften contrast */
     #cw-waveform {
         height: 32px;
     }
 
-    /* ensure it aligns with h-8 (32px) */
-    #cw-waveform .wavesurfer-canvas {
+    #cw-waveform canvas {
         height: 100% !important;
     }
 </style>

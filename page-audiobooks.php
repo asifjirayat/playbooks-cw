@@ -3,11 +3,10 @@
 /**
  * Template Name: All Audiobooks
  */
+get_header();
 ?>
 
 <?php
-get_header();
-
 // Pagination
 $paged = max(1, get_query_var('paged') ?: get_query_var('page'));
 ?>

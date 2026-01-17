@@ -11,13 +11,14 @@ $author_slug = get_query_var('cw_author');
 $author_name = ucwords(str_replace('-', ' ', $author_slug));
 
 // Pagination
-$paged = max(1, get_query_var('paged'));
+$paged = max(1, get_query_var('paged') ?: get_query_var('page'));
 
 // Query audiobooks by author ACF field
 $query = new WP_Query([
     'post_type'      => 'audiobook',
     'posts_per_page' => 20,
     'paged'          => $paged,
+    'no_found_rows'  => false,
     'meta_query'     => [
         [
             'key'     => 'book_author',
@@ -76,8 +77,9 @@ $query = new WP_Query([
                         while ($query->have_posts()):
                             $query->the_post();
 
-                            // Hide author label in card context
+                            // Card context
                             $show_author = false;
+                            $show_topics = true;
 
                             get_template_part('templates/parts/audiobook-card');
                         endwhile;
@@ -91,9 +93,11 @@ $query = new WP_Query([
                     <div class="mt-16 flex justify-center">
                         <?php
                         echo paginate_links([
-                            'total'   => $query->max_num_pages,
-                            'current' => $paged,
-                            'type'    => 'list',
+                            'total'      => $query->max_num_pages,
+                            'current'    => $paged,
+                            'type'       => 'list',
+                            'prev_text'  => '<span class="sr-only">Previous</span><i class="fa-solid fa-chevron-left"></i>',
+                            'next_text'  => '<span class="sr-only">Next</span><i class="fa-solid fa-chevron-right"></i>',
                         ]);
                         ?>
                     </div>

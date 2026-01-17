@@ -4,27 +4,31 @@
  * Audiobook Card
  *
  * Optional variables before include:
- * @var bool $show_topics  Whether to show topic pills (default: true)
- * @var bool $show_author Whether to show author name (default: true)
+ * @var bool $show_topics
+ * @var bool $show_author
  */
 
-$show_topics = $show_topics ?? true;
+$show_author = $show_author ?? true;
 
 // Core fields
-$cover_url = get_field('featured_image_url');
+$cover_url = get_field('book_cover_url');
 $author    = get_field('book_author');
-$duration  = get_field('duration');
+$duration  = get_field('listening_time');
+$concepts_raw = get_field('concepts');
 
-// Topics
-$topics = $show_topics
-    ? get_the_terms(get_the_ID(), 'topics')
+// Normalize concepts → pills
+$concepts = $concepts_raw
+    ? array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concepts_raw)))
     : [];
 ?>
 
-<a href="<?php the_permalink(); ?>" class="group block">
+<article class="group block relative">
+
+    <!-- STRETCHED LINK (card click target) -->
+    <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-10" aria-label="<?php the_title_attribute(); ?>"></a>
 
     <!-- Cover -->
-    <div class="relative mb-4 overflow-hidden rounded-xl bg-ui-surface border border-ui-border">
+    <div class="relative mb-4 overflow-hidden rounded-xl bg-ui-surface border border-ui-border z-0">
         <?php if ($cover_url): ?>
             <img
                 src="<?php echo esc_url($cover_url); ?>"
@@ -39,34 +43,22 @@ $topics = $show_topics
     </div>
 
     <!-- Title -->
-    <h3 class="text-base font-semibold text-ui-text group-hover:text-brand-yellow transition">
+    <h3 class="text-base font-semibold text-ui-text group-hover:text-brand-yellow transition relative z-20">
         <?php the_title(); ?>
     </h3>
 
     <!-- Author -->
-    <?php if ($author): ?>
-        <p class="text-sm text-ui-subtext mt-1">
+    <?php if ($show_author && $author): ?>
+        <p class="text-sm text-ui-subtext mt-1 relative z-20">
             <?php echo esc_html($author); ?>
         </p>
     <?php endif; ?>
 
-    <!-- Topic Pills (optional) -->
-    <?php if ($topics && !is_wp_error($topics)): ?>
-        <div class="flex flex-wrap gap-1 mt-2">
-            <?php foreach ($topics as $topic): ?>
-                <span class="text-[10px] px-2 py-0.5 rounded-full
-                             bg-ui-surface border border-ui-border text-ui-subtext">
-                    <?php echo esc_html($topic->name); ?>
-                </span>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-
     <!-- Duration -->
     <?php if ($duration): ?>
-        <p class="text-sm text-ui-subtext mt-2">
-            <?php echo esc_html($duration); ?>
+        <p class="text-sm text-ui-subtext mt-2 relative z-20">
+            <?php echo esc_html($duration); ?> <span>Minutes</span>
         </p>
     <?php endif; ?>
 
-</a>
+</article>
