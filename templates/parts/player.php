@@ -90,8 +90,6 @@ $is_locked = get_query_var('cw_locked');
                 <i class="fa-solid fa-share-nodes"></i>
             </button>
 
-            <div class="h-8 w-[1px] bg-slate-200 mx-1"></div>
-
         </div>
 
     </div>

@@ -14,12 +14,7 @@ $show_author = $show_author ?? true;
 $cover_url = get_field('book_cover_url');
 $author    = get_field('book_author');
 $duration  = get_field('listening_time');
-$concepts_raw = get_field('concepts');
-
-// Normalize concepts → pills
-$concepts = $concepts_raw
-    ? array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concepts_raw)))
-    : [];
+$rank = get_field('rank') ?: '';
 ?>
 
 <article class="group block relative">
@@ -29,17 +24,25 @@ $concepts = $concepts_raw
 
     <!-- Cover -->
     <div class="relative mb-4 overflow-hidden rounded-xl bg-ui-surface border border-ui-border shadow-sm group-hover:shadow-md transition group-hover:-translate-y-1 z-0">
+
         <?php if ($cover_url): ?>
             <img
                 src="<?php echo esc_url($cover_url); ?>"
                 alt="<?php the_title_attribute(); ?>"
                 class="w-full aspect-square object-contain bg-ui-surface rounded-xl
-                       transition-transform duration-300 group-hover:scale-105">
+                   transition-transform duration-300 group-hover:scale-105">
         <?php else: ?>
             <div class="aspect-square flex items-center justify-center text-ui-muted text-sm">
                 No cover
             </div>
         <?php endif; ?>
+
+        <?php if ($rank): ?>
+            <div class="absolute top-2 left-2 z-10 bg-yellow-400 text-black text-[11px] font-bold px-2 py-0.5 rounded-md shadow">
+                #<?= esc_html($rank); ?>
+            </div>
+        <?php endif; ?>
+
     </div>
 
     <!-- Title -->

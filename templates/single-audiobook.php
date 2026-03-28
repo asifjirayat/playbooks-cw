@@ -42,12 +42,20 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
         <div class="flex flex-col md:flex-row gap-8 items-start">
 
             <!-- COVER -->
-            <div class="w-48 shrink-0 aspect-square rounded-xl overflow-hidden shadow-lg">
+            <div class="relative w-48 shrink-0 aspect-square rounded-xl overflow-hidden shadow-lg">
+
                 <?php if ($book_cover_url): ?>
                     <img src="<?= esc_url($book_cover_url); ?>"
                         class="w-full h-full object-cover"
                         alt="<?php the_title_attribute(); ?>">
                 <?php endif; ?>
+
+                <?php if ($rank): ?>
+                    <div class="absolute top-2 left-2 bg-yellow-400 text-black text-xs font-bold px-2.5 py-1 rounded-md shadow">
+                        #<?= esc_html($rank); ?>
+                    </div>
+                <?php endif; ?>
+
             </div>
 
             <!-- CONTENT -->
@@ -180,14 +188,14 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
 
             <?php if (!$is_locked && $playbook_url): ?>
                 <a href="<?= esc_url($playbook_url); ?>"
-                    class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold no-underline hover:opacity-90 transition"
+                    class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-full font-semibold no-underline hover:opacity-90 transition"
                     download>
                     <i class="fa-solid fa-download"></i>
                     Download
                 </a>
             <?php else: ?>
                 <a href="/membership"
-                    class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold no-underline hover:opacity-90 transition">
+                    class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-full font-semibold no-underline hover:opacity-90 transition">
                     <i class="fa-solid fa-lock"></i>
                     Get Access
                 </a>
