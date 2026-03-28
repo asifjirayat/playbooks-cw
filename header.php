@@ -13,24 +13,24 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#0f172a',
-                            darker: '#020617',
-                            text: '#f8fafc',
-                            yellow: '#FFBC00',
                             primary: '#2563eb',
                             accent: '#f97316',
+                            yellow: '#FFBC00',
                         },
                         ui: {
-                            bg: '#020617',
-                            surface: '#0f172a',
-                            border: '#1e293b',
-                            text: '#e2e8f0',
-                            subtext: '#94a3b8',
+                            bg: '#ffffff',
+
+                            surface: '#f8fafc',
+                            surfaceHover: '#f1f5f9',
+
+                            border: '#e2e8f0',
+                            borderStrong: '#cbd5e1',
+
+                            text: '#0f172a',
+                            textSoft: '#334155',
+                            subtext: '#64748b',
+                            muted: '#94a3b8',
                         }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -48,7 +48,7 @@
 <body <?php body_class('bg-ui-bg font-sans antialiased'); ?>>
 
     <!-- Global Header -->
-    <header class="bg-ui-bg/90 backdrop-blur shadow-lg shadow-black/35 sticky top-0 z-50">
+    <header class="bg-ui-bg/90 backdrop-blur sticky top-0 z-50 border-b border-ui-border">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
 
             <!-- Logo -->
@@ -61,7 +61,7 @@
                         $logo_url = wp_get_attachment_image_url($logo_id, 'full');
                         echo '<img src="' . esc_url($logo_url) . '" class="h-10 md:h-12 w-auto" alt="Concentrated Wisdom Logo">';
                     } else {
-                        echo '<span class="text-xl md:text-2xl font-bold text-brand-yellow leading-none">Concentrated Wisdom</span>';
+                        echo '<span class="text-xl md:text-2xl font-bold text-brand-primary leading-none">Concentrated Wisdom</span>';
                     }
                     ?>
 
@@ -74,7 +74,7 @@
                 wp_nav_menu([
                     'theme_location' => 'primary_menu',
                     'container'      => false,
-                    'menu_class'     => 'flex gap-6 lg:gap-8 text-ui-text font-medium text-sm no-underline hover:no-underline',
+                    'menu_class'     => 'flex gap-6 lg:gap-8 text-ui-text font-medium text-sm',
                     'fallback_cb'    => false,
                     'depth'          => 2,
                 ]);
@@ -82,7 +82,7 @@
             </nav>
 
             <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" class="md:hidden text-ui-text text-3xl">
+            <button id="mobileMenuBtn" class="md:hidden text-ui-text text-2xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
 

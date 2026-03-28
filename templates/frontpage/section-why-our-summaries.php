@@ -11,12 +11,12 @@
                 Read less. Learn what actually matters.
             </h2>
 
-            <p class="text-base text-ui-subtext leading-relaxed mb-4 max-w-xl">
+            <p class="text-base text-ui-textSoft leading-relaxed mb-4 max-w-xl">
                 You don’t need a longer reading list. You need the right ideas, crystal clear, easy to absorb,
                 and ready to use.
             </p>
 
-            <p class="text-base text-ui-subtext leading-relaxed mb-4 max-w-xl">
+            <p class="text-base text-ui-textSoft leading-relaxed mb-4 max-w-xl">
                 We handpick the top 50 highest-reviewed titles in every major area of life and work. Then we rebuild
                 them into text and audio summaries that feel like a smart friend walking you through the big idea,
                 the story behind it, and exactly how it fits into your world.
@@ -28,7 +28,7 @@
         </div>
 
         <!-- RIGHT CARD -->
-        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6 shadow-xl text-base">
+        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6 shadow-md text-base">
 
             <p class="text-xs font-semibold uppercase tracking-[0.18em] text-ui-subtext mb-6">
                 Why our summaries feel different
@@ -37,64 +37,76 @@
             <ul class="space-y-6 text-ui-text">
 
                 <li class="flex gap-3">
-                    <span class="text-emerald-400 mt-0.5">
+                    <span class="text-brand-primary mt-0.5">
                         <i class="fa-solid fa-bullseye"></i>
                     </span>
                     <span>
-                        <strong>Instant clarity on the main idea</strong><br>
-                        Each summary locks onto the core argument and leaves out everything that gets in the way.
+                        <strong class="text-ui-text">Instant clarity on the main idea</strong><br>
+                        <span class="text-ui-subtext">
+                            Each summary locks onto the core argument and leaves out everything that gets in the way.
+                        </span>
                     </span>
                 </li>
 
                 <li class="flex gap-3">
-                    <span class="text-amber-400 mt-0.5">
+                    <span class="text-brand-primary mt-0.5">
                         <i class="fa-solid fa-book-open"></i>
                     </span>
                     <span>
-                        <strong>Story first, then structure</strong><br>
-                        We open with a tension or a moment you recognize, then guide you through the concepts
-                        with clean, simple flow.
+                        <strong class="text-ui-text">Story first, then structure</strong><br>
+                        <span class="text-ui-subtext">
+                            We open with a tension or a moment you recognize, then guide you through the concepts
+                            with clean, simple flow.
+                        </span>
                     </span>
                 </li>
 
                 <li class="flex gap-3">
-                    <span class="text-sky-400 mt-0.5">
+                    <span class="text-brand-primary mt-0.5">
                         <i class="fa-solid fa-diagram-project"></i>
                     </span>
                     <span>
-                        <strong>Deep insight made simple</strong><br>
-                        Research, mental models, and frameworks are translated into plain language so you can
-                        see the moving parts at a glance.
+                        <strong class="text-ui-text">Deep insight made simple</strong><br>
+                        <span class="text-ui-subtext">
+                            Research, mental models, and frameworks are translated into plain language so you can
+                            see the moving parts at a glance.
+                        </span>
                     </span>
                 </li>
 
                 <li class="flex gap-3">
-                    <span class="text-emerald-400 mt-0.5">
+                    <span class="text-brand-primary mt-0.5">
                         <i class="fa-solid fa-person-running"></i>
                     </span>
                     <span>
-                        <strong>Practical moves you can actually use</strong><br>
-                        Every summary includes concrete ways to apply the idea.
+                        <strong class="text-ui-text">Practical moves you can actually use</strong><br>
+                        <span class="text-ui-subtext">
+                            Every summary includes concrete ways to apply the idea.
+                        </span>
                     </span>
                 </li>
 
                 <li class="flex gap-3">
-                    <span class="text-brand-yellow mt-0.5">
+                    <span class="text-brand-primary mt-0.5">
                         <i class="fa-solid fa-brain"></i>
                     </span>
                     <span>
-                        <strong>Made to stick in your mind</strong><br>
-                        Emotional hooks, analogies, and examples make the ideas easy to remember.
+                        <strong class="text-ui-text">Made to stick in your mind</strong><br>
+                        <span class="text-ui-subtext">
+                            Emotional hooks, analogies, and examples make the ideas easy to remember.
+                        </span>
                     </span>
                 </li>
 
                 <li class="flex gap-3">
-                    <span class="text-pink-400 mt-0.5">
+                    <span class="text-brand-primary mt-0.5">
                         <i class="fa-solid fa-star"></i>
                     </span>
                     <span>
-                        <strong>Only the strongest books</strong><br>
-                        High review counts, high ratings, and real reader validation.
+                        <strong class="text-ui-text">Only the strongest books</strong><br>
+                        <span class="text-ui-subtext">
+                            High review counts, high ratings, and real reader validation.
+                        </span>
                     </span>
                 </li>
 

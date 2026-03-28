@@ -34,8 +34,8 @@ $query = new WP_Query([
 
 <main class="pb-24">
 
-    <!-- CATEGORY HERO -->
-    <section class="bg-gradient-to-b from-brand-darker to-ui-bg border-b border-ui-border">
+    <!-- HERO -->
+    <section class="bg-ui-bg border-b border-ui-border">
         <div class="max-w-7xl mx-auto px-4 py-16">
 
             <!-- Breadcrumb -->
@@ -45,7 +45,7 @@ $query = new WP_Query([
                     Library
                 </a>
                 <span class="mx-2">/</span>
-                <span class="text-ui-text"><?php echo esc_html($term->name); ?></span>
+                <span class="text-ui-textSoft"><?php echo esc_html($term->name); ?></span>
             </div>
 
             <!-- Title -->
@@ -55,7 +55,7 @@ $query = new WP_Query([
 
             <!-- Description -->
             <?php if (!empty($term->description)): ?>
-                <p class="max-w-2xl text-ui-subtext text-base leading-relaxed">
+                <p class="max-w-2xl text-ui-textSoft text-base leading-relaxed">
                     <?php echo esc_html($term->description); ?>
                 </p>
             <?php endif; ?>
@@ -83,7 +83,6 @@ $query = new WP_Query([
                         while ($query->have_posts()):
                             $query->the_post();
 
-                            // Card context
                             $show_topics = false;
                             $show_author = true;
 
@@ -102,8 +101,8 @@ $query = new WP_Query([
                             'total'      => $query->max_num_pages,
                             'current'    => $paged,
                             'type'       => 'list',
-                            'prev_text'  => '<span class="sr-only">Previous</span><i class="fa-solid fa-chevron-left"></i>',
-                            'next_text'  => '<span class="sr-only">Next</span><i class="fa-solid fa-chevron-right"></i>',
+                            'prev_text'  => '<i class="fa-solid fa-chevron-left"></i>',
+                            'next_text'  => '<i class="fa-solid fa-chevron-right"></i>',
                         ]);
                         ?>
                     </div>

@@ -1,4 +1,4 @@
-<section id="sample-playbook" class="border-y border-slate-900 py-16 md:py-24">
+<section id="sample-playbook" class="border-y border-ui-border py-16 md:py-24">
     <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-14 items-center">
 
         <!-- LEFT COLUMN: TEXT CONTENT -->
@@ -7,7 +7,7 @@
                 What you get inside each Playbook.
             </h2>
 
-            <p class="text-base text-ui-subtext leading-relaxed mb-6">
+            <p class="text-base text-ui-textSoft leading-relaxed mb-6">
                 We took the strongest ideas from each book and shaped them into a structure you can actually use
                 in a real month of life.
             </p>
@@ -19,7 +19,7 @@
                         <i class="fa-solid fa-circle-dot"></i>
                     </span>
                     <span>
-                        <strong class="font-semibold">30-day roadmap:</strong>
+                        <strong class="font-semibold text-ui-text">30-day roadmap:</strong>
                         A clean, step-by-step path that shows you what to do each day and each week so progress becomes automatic.
                     </span>
                 </li>
@@ -29,7 +29,7 @@
                         <i class="fa-solid fa-circle-dot"></i>
                     </span>
                     <span>
-                        <strong class="font-semibold">Daily and weekly checklists:</strong>
+                        <strong class="font-semibold text-ui-text">Daily and weekly checklists:</strong>
                         Instant clarity every morning. No guessing. No wandering. Just the moves that matter.
                     </span>
                 </li>
@@ -39,7 +39,7 @@
                         <i class="fa-solid fa-circle-dot"></i>
                     </span>
                     <span>
-                        <strong class="font-semibold">Reflection prompts and scorecards:</strong>
+                        <strong class="font-semibold text-ui-text">Reflection prompts and scorecards:</strong>
                         A mirror for your mind. Track growth, spot friction, and watch your thinking shift as the month unfolds.
                     </span>
                 </li>
@@ -49,7 +49,7 @@
                         <i class="fa-solid fa-circle-dot"></i>
                     </span>
                     <span>
-                        <strong class="font-semibold">Signature commitment:</strong>
+                        <strong class="font-semibold text-ui-text">Signature commitment:</strong>
                         Your rules. Your signature. A simple ritual that transforms intention into ownership.
                     </span>
                 </li>
@@ -59,7 +59,7 @@
                         <i class="fa-solid fa-circle-dot"></i>
                     </span>
                     <span>
-                        <strong class="font-semibold">Digital and printable PDF versions:</strong>
+                        <strong class="font-semibold text-ui-text">Digital and printable PDF versions:</strong>
                         Designed for speed. Review in seconds. Use anywhere. Zero friction between insight and action.
                     </span>
                 </li>
@@ -74,17 +74,17 @@
                 <img
                     src="https://loremflickr.com/400/200/checklist,notes"
                     alt="Daily checklist preview"
-                    class="w-40 h-56 object-cover rounded-xl border border-slate-800 shadow-xl" />
+                    class="w-40 h-56 object-cover rounded-xl border border-ui-border shadow-md" />
 
                 <img
                     src="https://loremflickr.com/400/200/planner"
                     alt="30 day roadmap preview"
-                    class="w-40 h-56 object-cover rounded-xl border border-slate-800 shadow-xl" />
+                    class="w-40 h-56 object-cover rounded-xl border border-ui-border shadow-md" />
 
                 <img
                     src="https://loremflickr.com/400/200/journal"
                     alt="Reflection prompts preview"
-                    class="w-40 h-56 object-cover rounded-xl border border-slate-800 shadow-xl" />
+                    class="w-40 h-56 object-cover rounded-xl border border-ui-border shadow-md" />
             </div>
 
             <p class="text-xs text-ui-subtext leading-normal">

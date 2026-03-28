@@ -31,18 +31,18 @@ $query = new WP_Query([
 
 <main class="pb-24">
 
-    <!-- AUTHOR HERO -->
-    <section class="bg-gradient-to-b from-brand-darker to-ui-bg border-b border-ui-border">
+    <!-- HERO -->
+    <section class="bg-ui-bg border-b border-ui-border">
         <div class="max-w-7xl mx-auto px-4 py-16">
 
             <!-- Breadcrumb -->
             <div class="text-xs font-medium text-ui-subtext uppercase tracking-wider mb-4">
                 <a href="<?php echo esc_url(home_url('/library')); ?>"
-                    class="hover:text-ui-text transition no-underline hover:no-underline">
+                    class="hover:text-ui-text transition">
                     Library
                 </a>
                 <span class="mx-2">/</span>
-                <span class="text-ui-text">Author</span>
+                <span class="text-ui-textSoft">Author</span>
             </div>
 
             <!-- Title -->
@@ -50,7 +50,8 @@ $query = new WP_Query([
                 <?php echo esc_html($author_name); ?>
             </h1>
 
-            <p class="max-w-2xl text-ui-subtext text-base leading-relaxed">
+            <!-- Description -->
+            <p class="max-w-2xl text-ui-textSoft text-base leading-relaxed">
                 Audiobook summaries written by <?php echo esc_html($author_name); ?>.
             </p>
 
@@ -77,7 +78,6 @@ $query = new WP_Query([
                         while ($query->have_posts()):
                             $query->the_post();
 
-                            // Card context
                             $show_author = false;
                             $show_topics = true;
 
@@ -96,8 +96,8 @@ $query = new WP_Query([
                             'total'      => $query->max_num_pages,
                             'current'    => $paged,
                             'type'       => 'list',
-                            'prev_text'  => '<span class="sr-only">Previous</span><i class="fa-solid fa-chevron-left"></i>',
-                            'next_text'  => '<span class="sr-only">Next</span><i class="fa-solid fa-chevron-right"></i>',
+                            'prev_text'  => '<i class="fa-solid fa-chevron-left"></i>',
+                            'next_text'  => '<i class="fa-solid fa-chevron-right"></i>',
                         ]);
                         ?>
                     </div>

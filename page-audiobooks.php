@@ -14,7 +14,7 @@ $paged = max(1, get_query_var('paged') ?: get_query_var('page'));
 <main class="pb-24">
 
     <!-- HERO -->
-    <section class="bg-gradient-to-b from-brand-darker to-ui-bg border-b border-ui-border">
+    <section class="bg-ui-bg border-b border-ui-border">
         <div class="max-w-7xl mx-auto px-4 py-16">
 
             <!-- Breadcrumb -->
@@ -24,7 +24,7 @@ $paged = max(1, get_query_var('paged') ?: get_query_var('page'));
                     Library
                 </a>
                 <span class="mx-2">/</span>
-                <span class="text-ui-text">All Audiobooks</span>
+                <span class="text-ui-textSoft">All Audiobooks</span>
             </div>
 
             <!-- Title -->
@@ -33,7 +33,7 @@ $paged = max(1, get_query_var('paged') ?: get_query_var('page'));
             </h1>
 
             <!-- Description -->
-            <p class="max-w-2xl text-ui-subtext text-base leading-relaxed">
+            <p class="max-w-2xl text-ui-textSoft text-base leading-relaxed">
                 Browse the complete library of audiobook summaries across all topics.
             </p>
 
@@ -47,7 +47,7 @@ $paged = max(1, get_query_var('paged') ?: get_query_var('page'));
             <!-- SIDEBAR: TOPICS -->
             <aside class="col-span-12 lg:col-span-3 self-start">
                 <div class="sticky top-28">
-                    <div class="bg-ui-surface/40 backdrop-blur border border-ui-border rounded-xl p-6">
+                    <div class="bg-ui-surface border border-ui-border rounded-xl p-6 shadow-sm">
 
                         <h3 class="text-xs font-bold text-ui-subtext uppercase tracking-wider mb-4">
                             Topics
@@ -97,7 +97,6 @@ $paged = max(1, get_query_var('paged') ?: get_query_var('page'));
                         while ($query->have_posts()):
                             $query->the_post();
 
-                            // Card context
                             $show_topics = true;
                             $show_author = true;
 
@@ -113,9 +112,9 @@ $paged = max(1, get_query_var('paged') ?: get_query_var('page'));
                     <div class="mt-16 flex justify-center">
                         <?php
                         echo paginate_links([
-                            'total'   => $query->max_num_pages,
-                            'current' => $paged,
-                            'type'    => 'list',
+                            'total'      => $query->max_num_pages,
+                            'current'    => $paged,
+                            'type'       => 'list',
                             'prev_text'  => '<i class="fa-solid fa-chevron-left"></i>',
                             'next_text'  => '<i class="fa-solid fa-chevron-right"></i>',
                         ]);

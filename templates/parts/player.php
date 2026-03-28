@@ -1,27 +1,24 @@
 <?php
 
 /**
- * Player Partial – WaveSurfer (working baseline)
- * Expects:
- *  - cw_audio_url (string)
- *  - cw_locked (bool)
+ * Player Partial – WaveSurfer
  */
 
 $audio_url = get_query_var('cw_audio_url');
 $is_locked = get_query_var('cw_locked');
 ?>
 
-<!-- WaveSurfer UMD (GLOBAL BUILD – REQUIRED) -->
 <script src="https://unpkg.com/wavesurfer.js@7.12.1/dist/wavesurfer.min.js"></script>
 
-<div id="cw-inline-player" class="bg-ui-surface/40 border border-ui-border rounded-xl p-5 mt-6">
+<div id="cw-inline-player" class="bg-ui-surface border border-ui-border rounded-xl p-5 mt-6 shadow-sm">
     <div class="flex items-center gap-4">
 
         <!-- Play/Pause Button -->
         <button id="cw-inline-play"
             class="w-12 h-12 rounded-full flex items-center justify-center text-white
-            <?= $is_locked ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-brand-primary hover:brightness-110' ?>"
-            aria-label="Play/Pause">
+            <?= $is_locked
+                ? 'bg-ui-border text-ui-muted cursor-not-allowed'
+                : 'bg-brand-primary hover:bg-blue-600 transition' ?>">
             <i class="fa-solid fa-play" id="cw-inline-icon"></i>
         </button>
 
@@ -29,9 +26,9 @@ $is_locked = get_query_var('cw_locked');
         <div class="flex-1">
             <div class="flex items-center justify-between text-xs text-ui-subtext font-medium mb-2">
                 <span>Audio Summary</span>
-                <span id="cw-inline-duration" class="text-ui-subtext text-xs"></span>
+                <span id="cw-inline-duration" class="text-ui-subtext"></span>
             </div>
-            <div id="cw-waveform" class="w-full h-8 rounded-md overflow-hidden"></div>
+            <div id="cw-waveform" class="w-full h-8 rounded-md overflow-hidden bg-ui-bg"></div>
         </div>
 
     </div>
@@ -39,7 +36,7 @@ $is_locked = get_query_var('cw_locked');
 
 <!-- Sticky Player -->
 <div id="cw-sticky-player"
-    class="fixed bottom-0 left-0 right-0 bg-ui-surface border-t border-ui-border shadow-xl translate-y-full transition-transform duration-300 z-50">
+    class="fixed bottom-0 left-0 right-0 bg-ui-surface border-t border-ui-border shadow-md translate-y-full transition-transform duration-300 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
 
         <div class="flex items-center gap-3">
@@ -54,16 +51,16 @@ $is_locked = get_query_var('cw_locked');
         </div>
 
         <div class="flex items-center gap-4">
-            <button id="cw-sticky-back" class="text-ui-subtext hover:text-ui-text">
+            <button id="cw-sticky-back" class="text-ui-subtext hover:text-ui-text transition">
                 <i class="fa-solid fa-backward-15"></i>
             </button>
 
             <button id="cw-sticky-play"
-                class="w-10 h-10 bg-brand-primary text-white rounded-full flex items-center justify-center hover:brightness-110">
+                class="w-10 h-10 bg-brand-primary text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition">
                 <i class="fa-solid fa-play" id="cw-sticky-icon"></i>
             </button>
 
-            <button id="cw-sticky-forward" class="text-ui-subtext hover:text-ui-text">
+            <button id="cw-sticky-forward" class="text-ui-subtext hover:text-ui-text transition">
                 <i class="fa-solid fa-forward-15"></i>
             </button>
         </div>
@@ -78,10 +75,7 @@ $is_locked = get_query_var('cw_locked');
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            if (typeof WaveSurfer === 'undefined') {
-                console.error('WaveSurfer not loaded');
-                return;
-            }
+            if (typeof WaveSurfer === 'undefined') return;
 
             const audioUrl = '<?= esc_js($audio_url); ?>';
 
@@ -97,8 +91,8 @@ $is_locked = get_query_var('cw_locked');
 
             const ws = WaveSurfer.create({
                 container: '#cw-waveform',
-                waveColor: 'rgba(255,255,255,0.15)',
-                progressColor: '#FFBC00',
+                waveColor: '#cbd5e1', // ui.borderStrong-ish
+                progressColor: '#2563eb', // brand.primary
                 cursorWidth: 0,
                 height: 32,
                 normalize: true,

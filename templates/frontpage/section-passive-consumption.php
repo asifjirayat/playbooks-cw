@@ -6,7 +6,7 @@
             The problem isn’t books.<br>It’s passive consumption.
         </h2>
 
-        <p class="text-base text-ui-subtext leading-relaxed">
+        <p class="text-base text-ui-textSoft leading-relaxed">
             You take in ideas, but they rarely become action.<br>
             You learn more… and still do the same.
         </p>
@@ -15,7 +15,7 @@
     <!-- Problem Cards -->
     <div class="grid md:grid-cols-3 gap-6">
 
-        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6">
+        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6 hover:bg-ui-surfaceHover hover:shadow-md transition">
             <p class="text-base font-semibold text-ui-text mb-2">
                 You buy books but rarely finish them.
             </p>
@@ -24,7 +24,7 @@
             </p>
         </div>
 
-        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6">
+        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6 hover:bg-ui-surfaceHover hover:shadow-md transition">
             <p class="text-base font-semibold text-ui-text mb-2">
                 Summaries give you facts, not skills.
             </p>
@@ -33,7 +33,7 @@
             </p>
         </div>
 
-        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6">
+        <div class="bg-ui-surface border border-ui-border rounded-2xl p-6 hover:bg-ui-surfaceHover hover:shadow-md transition">
             <p class="text-base font-semibold text-ui-text mb-2">
                 And you don’t have hours to build systems yourself.
             </p>

@@ -7,7 +7,7 @@ $plans = new WP_Query([
 ]);
 
 if ($plans->have_posts()) : ?>
-    <section id="pricing" class="border-y border-slate-900 py-16 md:py-24">
+    <section id="pricing" class="border-y border-ui-border py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4">
 
             <!-- Section Header -->
@@ -15,7 +15,7 @@ if ($plans->have_posts()) : ?>
                 <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-4 text-ui-text">
                     One subscription. Every summary and Playbook unlocked.
                 </h2>
-                <p class="text-base text-ui-subtext leading-relaxed">
+                <p class="text-base text-ui-textSoft leading-relaxed">
                     Cancel any time. Keep the Playbooks you have downloaded.
                 </p>
             </div>
@@ -39,15 +39,15 @@ if ($plans->have_posts()) : ?>
 
                     <!-- Card Wrapper -->
                     <?php if ($is_featured) : ?>
-                        <div class="relative bg-gradient-to-br from-brand-primary to-blue-500 rounded-2xl p-[1px] shadow-xl">
-                            <div class="relative bg-slate-950 rounded-2xl p-6 flex flex-col h-full">
+                        <div class="relative bg-gradient-to-br from-brand-primary to-blue-500 rounded-2xl p-[1px] shadow-lg">
+                            <div class="relative bg-ui-bg rounded-2xl p-6 flex flex-col h-full">
                             <?php else : ?>
-                                <div class="relative bg-slate-950 border border-slate-800 rounded-2xl p-6 flex flex-col shadow-lg">
+                                <div class="relative bg-ui-surface border border-ui-border rounded-2xl p-6 flex flex-col shadow-md">
                                 <?php endif; ?>
 
                                 <!-- Featured Badge -->
                                 <?php if ($badge) : ?>
-                                    <span class="absolute top-4 right-4 text-xs bg-emerald-400/20 text-emerald-300 rounded-full px-2 py-0.5 tracking-wider">
+                                    <span class="absolute top-4 right-4 text-xs bg-brand-primary/10 text-brand-primary rounded-full px-2 py-0.5 tracking-wider border border-brand-primary/20">
                                         <?php echo esc_html($badge); ?>
                                     </span>
                                 <?php endif; ?>
@@ -66,21 +66,28 @@ if ($plans->have_posts()) : ?>
                                 </p>
 
                                 <!-- Description -->
-                                <p class="text-base text-ui-subtext leading-relaxed mb-4">
+                                <p class="text-base text-ui-textSoft leading-relaxed mb-4">
                                     <?php echo esc_html($desc); ?>
                                 </p>
 
                                 <!-- Features -->
                                 <ul class="space-y-3 text-base text-ui-subtext leading-relaxed mb-6">
                                     <?php foreach ($features as $feat) : ?>
-                                        <li><?php echo esc_html($feat); ?></li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-brand-primary mt-1">
+                                                <i class="fa-solid fa-check"></i>
+                                            </span>
+                                            <span><?php echo esc_html($feat); ?></span>
+                                        </li>
                                     <?php endforeach; ?>
                                 </ul>
 
                                 <!-- Button -->
                                 <a href="<?php echo esc_url($btn_url); ?>"
                                     class="mt-auto inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition
-                          <?php echo $is_featured ? 'bg-white text-slate-900 hover:bg-slate-100' : 'bg-slate-200 text-slate-900 hover:bg-slate-100'; ?>">
+                                    <?php echo $is_featured
+                                        ? 'bg-brand-primary text-white hover:bg-blue-600'
+                                        : 'bg-ui-surface border border-ui-border text-ui-text hover:bg-ui-surfaceHover'; ?>">
                                     <?php echo esc_html($btn_label); ?>
                                 </a>
 
@@ -97,4 +104,5 @@ if ($plans->have_posts()) : ?>
         </div>
     </section>
 <?php endif;
-wp_reset_postdata(); ?>
+wp_reset_postdata();
+?>

@@ -28,7 +28,7 @@ $tip3           = get_field('hero_tooltip_3');
 $tooltip_img    = get_field('hero_tooltip_image'); // optional
 ?>
 
-<section class="relative py-20 lg:py-28 bg-gradient-to-b from-brand-darker to-ui-bg overflow-hidden">
+<section class="relative py-16 lg:py-20 bg-ui-bg overflow-hidden border-b border-ui-border">
 
     <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
 
@@ -51,7 +51,7 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
             <?php endif; ?>
 
             <?php if ($subtext): ?>
-                <p class="text-base sm:text-lg leading-relaxed text-ui-subtext mb-6 max-w-xl">
+                <p class="text-base sm:text-lg leading-relaxed text-ui-textSoft mb-6 max-w-xl">
                     <?= esc_html($subtext); ?>
                 </p>
             <?php endif; ?>
@@ -62,7 +62,7 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
                 <?php foreach ([$bullet1, $bullet2, $bullet3] as $bullet): ?>
                     <?php if ($bullet): ?>
                         <li class="flex items-start gap-3">
-                            <span class="text-emerald-400 mt-0.5"><i class="fa-solid fa-check"></i></span>
+                            <span class="text-brand-primary mt-0.5"><i class="fa-solid fa-check"></i></span>
                             <span><?= esc_html($bullet); ?></span>
                         </li>
                     <?php endif; ?>
@@ -75,7 +75,7 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
 
                 <?php if ($cta1_label && $cta1_url): ?>
                     <a href="<?= esc_url($cta1_url); ?>"
-                        class="inline-flex items-center gap-2 rounded-full bg-brand-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 transition">
+                        class="inline-flex items-center gap-2 rounded-full bg-brand-primary px-6 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg transition">
                         <?= esc_html($cta1_label); ?>
                         <i class="fa-solid fa-arrow-down text-xs opacity-80"></i>
                     </a>
@@ -83,7 +83,7 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
 
                 <?php if ($cta2_label): ?>
                     <a href="<?= esc_url($cta2_url ?: '#'); ?>"
-                        class="inline-flex items-center gap-2 rounded-full border border-slate-600 px-6 py-3 text-sm font-semibold text-ui-text hover:bg-slate-800 transition">
+                        class="inline-flex items-center gap-2 rounded-full border border-ui-border px-6 py-3 text-sm font-semibold text-ui-text hover:bg-ui-surface transition">
                         <?= esc_html($cta2_label); ?>
                         <i class="fa-solid fa-play text-[10px] opacity-80"></i>
                     </a>
@@ -92,7 +92,7 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
             </div>
 
             <?php if ($footnote): ?>
-                <p class="mt-4 text-xs text-slate-500 leading-normal">
+                <p class="mt-4 text-xs text-ui-muted leading-normal">
                     <?= esc_html($footnote); ?>
                 </p>
             <?php endif; ?>
@@ -104,7 +104,7 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
             <div class="relative w-auto md:max-w-md">
 
                 <?php if ($badge): ?>
-                    <div class="absolute -top-4 -left-4 bg-emerald-500 text-emerald-950 text-[11px] font-semibold rounded-full px-3 py-1 shadow-lg">
+                    <div class="absolute -top-4 -left-4 bg-ui-bg text-brand-primary text-[11px] font-semibold rounded-full px-3 py-1 border border-brand-primary/20">
                         <?= esc_html($badge); ?>
                     </div>
                 <?php endif; ?>
@@ -112,15 +112,15 @@ $tooltip_img    = get_field('hero_tooltip_image'); // optional
                 <?php if ($hero_img): ?>
                     <img src="<?= esc_url($hero_img['url']); ?>"
                         alt="<?= esc_attr($hero_img['alt']); ?>"
-                        class="w-full h-auto object-cover rounded-xl shadow-xl shadow-black/50 border border-ui-border">
+                        class="w-full h-auto object-cover rounded-xl shadow-lg border border-ui-border">
                 <?php endif; ?>
 
-                <div class="absolute -bottom-4 -right-3 bg-slate-900/95 border border-ui-border rounded-xl px-4 py-3 text-xs shadow-xl max-w-[210px]">
+                <div class="absolute -bottom-4 -right-3 bg-ui-surface border border-ui-border rounded-xl px-4 py-3 text-xs shadow-md max-w-[210px]">
                     <?php if ($tooltip_title): ?>
-                        <p class="font-semibold text-slate-100 mb-2"><?= esc_html($tooltip_title); ?></p>
+                        <p class="font-semibold text-ui-text mb-2"><?= esc_html($tooltip_title); ?></p>
                     <?php endif; ?>
 
-                    <ul class="space-y-1 text-slate-400 leading-normal">
+                    <ul class="space-y-1 text-ui-subtext leading-normal">
                         <?php if ($tip1): ?><li>• <?= esc_html($tip1); ?></li><?php endif; ?>
                         <?php if ($tip2): ?><li>• <?= esc_html($tip2); ?></li><?php endif; ?>
                         <?php if ($tip3): ?><li>• <?= esc_html($tip3); ?></li><?php endif; ?>

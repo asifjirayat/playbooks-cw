@@ -20,7 +20,7 @@
                 <a href="<?php the_permalink(); ?>" class="group block">
 
                     <!-- Thumbnail -->
-                    <div class="relative mb-4 overflow-hidden rounded-xl bg-ui-surface border border-ui-border">
+                    <div class="relative mb-4 overflow-hidden rounded-xl bg-ui-surface border border-ui-border shadow-sm group-hover:shadow-md transition group-hover:-translate-y-1">
                         <img
                             src="<?php echo esc_url(get_field('featured_image_url')); ?>"
                             alt="<?php the_title_attribute(); ?>"
@@ -28,13 +28,13 @@
                     </div>
 
                     <!-- Title -->
-                    <h3 class="text-base font-semibold text-ui-text group-hover:text-brand-yellow transition">
+                    <h3 class="text-base font-semibold text-ui-text group-hover:text-brand-primary transition">
                         <?php the_title(); ?>
                     </h3>
 
                     <!-- Author -->
                     <?php if ($author = get_field('book_author')): ?>
-                        <p class="text-sm text-ui-subtext mt-1">
+                        <p class="text-sm text-ui-textSoft mt-1">
                             <?php echo esc_html($author); ?>
                         </p>
                     <?php endif; ?>

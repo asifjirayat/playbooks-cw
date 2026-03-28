@@ -5,7 +5,7 @@
  */
 ?>
 
-<section class="bg-gradient-to-b from-brand-darker to-ui-bg border-b border-ui-border">
+<section class="bg-ui-bg border-b border-ui-border">
     <div class="max-w-7xl mx-auto px-4 py-16">
 
         <!-- Eyebrow -->
@@ -19,7 +19,7 @@
         </h1>
 
         <!-- Description -->
-        <p class="max-w-2xl text-ui-subtext text-base leading-relaxed mb-8">
+        <p class="max-w-2xl text-ui-textSoft text-base leading-relaxed mb-8">
             Browse concise audio summaries across topics that matter.
             Learn faster, retain more, and apply ideas immediately.
         </p>
@@ -27,8 +27,7 @@
         <!-- CTA -->
         <a href="<?php echo esc_url(home_url('/audiobooks')); ?>"
             class="inline-flex items-center gap-2 rounded-full bg-brand-primary px-6 py-3 
-                  text-sm font-semibold text-white shadow-lg shadow-brand-primary/20
-                  hover:shadow-brand-primary/40 transition">
+                  text-sm font-semibold text-white shadow-md hover:shadow-lg transition">
             View all audiobooks
             <i class="fa-solid fa-arrow-right text-xs opacity-80"></i>
         </a>

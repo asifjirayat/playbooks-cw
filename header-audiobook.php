@@ -13,28 +13,28 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#0f172a',
-                            darker: '#020617',
-                            text: '#f8fafc',
-                            yellow: '#FFBC00',
                             primary: '#2563eb',
                             accent: '#f97316',
+                            yellow: '#FFBC00',
                         },
                         ui: {
-                            bg: '#020617',
-                            surface: '#0f172a',
-                            border: '#1e293b',
-                            text: '#e2e8f0',
-                            subtext: '#94a3b8',
+                            bg: '#ffffff',
+
+                            surface: '#f8fafc',
+                            surfaceHover: '#f1f5f9',
+
+                            border: '#e2e8f0',
+                            borderStrong: '#cbd5e1',
+
+                            text: '#0f172a',
+                            textSoft: '#334155',
+                            subtext: '#64748b',
+                            muted: '#94a3b8',
                         }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Inter', 'sans-serif'],
                     }
                 }
             }
-        };
+        }
     </script>
 
     <!-- Icons -->
@@ -63,12 +63,12 @@
 
                 <!-- Bookmark -->
                 <button id="cw-header-bookmark"
-                    class="text-xl hover:text-brand-yellow transition">
+                    class="text-xl hover:text-brand-primary transition">
                     <i class="fa-regular fa-bookmark"></i>
                 </button>
 
                 <!-- Share -->
-                <button class="text-xl hover:text-brand-yellow transition"
+                <button class="text-xl hover:text-brand-primary transition"
                     onclick="navigator.share && navigator.share({ title: '<?php echo esc_js(get_the_title()); ?>', url: window.location.href });">
                     <i class="fa-solid fa-share-nodes"></i>
                 </button>

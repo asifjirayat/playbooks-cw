@@ -22,7 +22,7 @@ if (empty($topics) || is_wp_error($topics)) {
         // Query audiobooks for this topic
         $books = new WP_Query([
             'post_type'      => 'audiobook',
-            'posts_per_page' => 4, // preview count
+            'posts_per_page' => 4,
             'tax_query'      => [
                 [
                     'taxonomy' => 'topics',
@@ -47,8 +47,8 @@ if (empty($topics) || is_wp_error($topics)) {
                 </h2>
 
                 <a href="<?= esc_url(get_term_link($topic)); ?>"
-                    class="text-sm font-semibold text-brand-yellow hover:text-brand-yellow/80">
-                    View Category <i class="fa-solid fa-arrow-right"></i>
+                    class="text-sm font-semibold text-brand-primary hover:text-blue-600 transition">
+                    View Category <i class="fa-solid fa-arrow-right text-xs ml-1"></i>
                 </a>
 
             </div>

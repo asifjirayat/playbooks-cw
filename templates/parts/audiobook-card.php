@@ -24,11 +24,11 @@ $concepts = $concepts_raw
 
 <article class="group block relative">
 
-    <!-- STRETCHED LINK (card click target) -->
+    <!-- STRETCHED LINK -->
     <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-10" aria-label="<?php the_title_attribute(); ?>"></a>
 
     <!-- Cover -->
-    <div class="relative mb-4 overflow-hidden rounded-xl bg-ui-surface border border-ui-border z-0">
+    <div class="relative mb-4 overflow-hidden rounded-xl bg-ui-surface border border-ui-border shadow-sm group-hover:shadow-md transition group-hover:-translate-y-1 z-0">
         <?php if ($cover_url): ?>
             <img
                 src="<?php echo esc_url($cover_url); ?>"
@@ -36,20 +36,20 @@ $concepts = $concepts_raw
                 class="w-full aspect-square object-contain bg-ui-surface rounded-xl
                        transition-transform duration-300 group-hover:scale-105">
         <?php else: ?>
-            <div class="aspect-square flex items-center justify-center text-ui-subtext text-sm">
+            <div class="aspect-square flex items-center justify-center text-ui-muted text-sm">
                 No cover
             </div>
         <?php endif; ?>
     </div>
 
     <!-- Title -->
-    <h3 class="text-base font-semibold text-ui-text group-hover:text-brand-yellow transition relative z-20">
+    <h3 class="text-base font-semibold text-ui-text group-hover:text-brand-primary transition relative z-20">
         <?php the_title(); ?>
     </h3>
 
     <!-- Author -->
     <?php if ($show_author && $author): ?>
-        <p class="text-sm text-ui-subtext mt-1 relative z-20">
+        <p class="text-sm text-ui-textSoft mt-1 relative z-20">
             <?php echo esc_html($author); ?>
         </p>
     <?php endif; ?>
@@ -57,8 +57,19 @@ $concepts = $concepts_raw
     <!-- Duration -->
     <?php if ($duration): ?>
         <p class="text-sm text-ui-subtext mt-2 relative z-20">
-            <?php echo esc_html($duration); ?> <span>Minutes</span>
+            <?php echo esc_html($duration); ?> <span class="text-ui-muted">min</span>
         </p>
+    <?php endif; ?>
+
+    <!-- Concepts (optional, if you want later use) -->
+    <?php if (!empty($concepts)): ?>
+        <div class="flex flex-wrap gap-1 mt-2 relative z-20">
+            <?php foreach ($concepts as $concept): ?>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-ui-surface border border-ui-border text-ui-subtext">
+                    <?php echo esc_html($concept); ?>
+                </span>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 
 </article>

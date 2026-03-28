@@ -40,7 +40,7 @@ $topic_counts = array_slice($topic_counts, 0, 6);
 ?>
 
 <aside class="hidden lg:block">
-    <div class="bg-ui-surface/40 backdrop-blur border border-ui-border rounded-xl p-6">
+    <div class="bg-ui-surface border border-ui-border rounded-xl p-6 shadow-sm">
 
         <h3 class="text-xs font-bold text-ui-subtext uppercase tracking-wider mb-4">
             Related Topics
@@ -50,12 +50,12 @@ $topic_counts = array_slice($topic_counts, 0, 6);
             <?php foreach ($topic_counts as $item): ?>
                 <li>
                     <a href="<?= esc_url(get_term_link($item['term'])); ?>"
-                        class="flex items-center justify-between text-sm text-ui-subtext
-                              hover:text-ui-text font-medium transition no-underline hover:no-underline">
+                        class="flex items-center justify-between text-sm text-ui-textSoft
+                               hover:text-ui-text font-medium transition">
 
                         <span><?= esc_html($item['term']->name); ?></span>
 
-                        <span class="text-xs px-2 py-0.5 rounded bg-ui-bg border border-ui-border">
+                        <span class="text-xs px-2 py-0.5 rounded bg-ui-bg border border-ui-border text-ui-subtext">
                             <?= intval($item['count']); ?>
                         </span>
                     </a>

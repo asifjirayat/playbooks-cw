@@ -14,7 +14,7 @@ if ($faqs->have_posts()) : ?>
             <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-4 text-ui-text">
                 Questions, answered.
             </h2>
-            <p class="text-base text-ui-subtext leading-relaxed">
+            <p class="text-base text-ui-textSoft leading-relaxed">
                 A few things ambitious readers usually ask.
             </p>
         </div>
@@ -24,7 +24,7 @@ if ($faqs->have_posts()) : ?>
             <?php while ($faqs->have_posts()) : $faqs->the_post();
                 $answer = get_field('answer_text');
             ?>
-                <details class="group bg-slate-900 border border-ui-border rounded-xl p-5">
+                <details class="group bg-ui-surface border border-ui-border rounded-xl p-5 hover:bg-ui-surfaceHover transition">
                     <summary class="flex items-center justify-between cursor-pointer list-none">
                         <span class="font-semibold text-ui-text leading-normal">
                             <?php the_title(); ?>
@@ -45,4 +45,5 @@ if ($faqs->have_posts()) : ?>
 
     </section>
 <?php endif;
-wp_reset_postdata(); ?>
+wp_reset_postdata();
+?>

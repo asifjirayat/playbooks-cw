@@ -14,7 +14,7 @@ if ($testimonials->have_posts()) : ?>
             <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-4 text-ui-text">
                 Trusted by people who measure their lives in outcomes, not pages read.
             </h2>
-            <p class="text-base text-ui-subtext leading-relaxed">
+            <p class="text-base text-ui-textSoft leading-relaxed">
                 Founders, operators, and ambitious professionals across domains.
             </p>
         </div>
@@ -26,7 +26,7 @@ if ($testimonials->have_posts()) : ?>
                 $quote = get_field('quote_text');
                 $role  = get_field('author_role');
             ?>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                <div class="bg-ui-surface border border-ui-border rounded-2xl p-6 flex flex-col justify-between hover:bg-ui-surfaceHover hover:shadow-md transition">
 
                     <p class="text-ui-text italic leading-relaxed mb-4">
                         <?php echo esc_html($quote); ?>
@@ -45,4 +45,5 @@ if ($testimonials->have_posts()) : ?>
 
     </section>
 <?php endif;
-wp_reset_postdata(); ?>
+wp_reset_postdata();
+?>
