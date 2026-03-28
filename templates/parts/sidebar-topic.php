@@ -55,7 +55,7 @@ $author_counts = array_slice($author_counts, 0, 6, true);
                 <li>
                     <a href="<?= esc_url(home_url('/authors/' . sanitize_title($author))); ?>"
                         class="flex items-center justify-between text-sm text-ui-textSoft
-                               hover:text-ui-text font-medium transition">
+                               hover:text-ui-text font-medium no-underline transition">
 
                         <span><?= esc_html($author); ?></span>
 

@@ -35,114 +35,76 @@ $primary_topic = !empty($topics) && !is_wp_error($topics) ? $topics[0] : null;
 $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concepts_raw)));
 ?>
 
-<main id="content" class="max-w-3xl mx-auto px-4 pb-24">
+<main id="content" class="max-w-3xl mx-auto px-6 py-24">
 
     <!-- HERO -->
-    <section class="py-12">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+    <section class="mb-16">
+        <div class="flex flex-col md:flex-row gap-8 items-start">
 
-            <!-- LEFT -->
-            <div class="flex justify-center md:justify-end relative">
-                <div class="relative inline-block text-center">
-
-                    <?php if ($rank): ?>
-                        <span class="absolute top-2 left-2 -translate-x-1/4 -translate-y-1/4 
-                                     bg-brand-primary text-white text-[12px] font-semibold rounded-full px-3 py-1 shadow-md z-20">
-                            Rank #<?= esc_html($rank); ?>
-                        </span>
-                    <?php endif; ?>
-
-                    <?php if ($book_cover_url): ?>
-                        <img src="<?= esc_url($book_cover_url); ?>"
-                            alt="<?php the_title_attribute(); ?> cover"
-                            class="w-56 md:w-72 rounded-xl shadow-md border border-ui-border object-contain block mx-auto">
-                    <?php else: ?>
-                        <div class="w-56 md:w-72 h-80 bg-ui-surface rounded-xl border border-ui-border flex items-center justify-center text-ui-muted">
-                            No cover
-                        </div>
-                    <?php endif; ?>
-
-                </div>
+            <!-- COVER -->
+            <div class="w-48 shrink-0 aspect-square rounded-xl overflow-hidden shadow-lg">
+                <?php if ($book_cover_url): ?>
+                    <img src="<?= esc_url($book_cover_url); ?>"
+                        class="w-full h-full object-cover"
+                        alt="<?php the_title_attribute(); ?>">
+                <?php endif; ?>
             </div>
 
-            <!-- RIGHT -->
-            <div>
+            <!-- CONTENT -->
+            <div class="flex-1">
 
                 <?php if ($primary_topic): ?>
-                    <a href="<?= esc_url(get_term_link($primary_topic)); ?>"
-                        class="inline-block mt-3 text-xs font-semibold text-brand-primary hover:underline">
+                    <span class="text-xs font-semibold tracking-[0.2em] uppercase text-brand-primary block mb-3">
                         <?= esc_html($primary_topic->name); ?>
-                    </a>
+                    </span>
                 <?php endif; ?>
 
-                <h1 class="text-4xl lg:text-5xl font-bold text-ui-text mb-4">
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">
                     <?php the_title(); ?>
                 </h1>
 
-                <p class="text-ui-subtext font-medium text-sm mb-4">
-                    By <span class="text-ui-text font-semibold"><?= esc_html($author); ?></span>
-                    <?php if ($listening_time): ?>
-                        · <?= esc_html($listening_time); ?> min
-                    <?php endif; ?>
+                <p class="text-lg text-ui-subtext font-medium mb-6">
+                    <?= esc_html($author); ?>
                 </p>
 
+                <!-- META -->
+                <div class="flex flex-wrap gap-4 text-sm text-ui-subtext mb-6">
+                    <?php if ($listening_time): ?>
+                        <div class="flex items-center gap-1">
+                            <i class="fa-regular fa-clock"></i>
+                            <span><?= esc_html($listening_time); ?> min read</span>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="flex items-center gap-1">
+                        <i class="fa-regular fa-headphones"></i>
+                        <span><?= esc_html($listening_time); ?> min audio</span>
+                    </div>
+                </div>
+
+                <!-- CONCEPT TAGS -->
                 <?php if ($concepts): ?>
-                    <div class="flex flex-wrap gap-2 mb-4">
+                    <div class="flex flex-wrap gap-2 mb-6">
                         <?php foreach ($concepts as $concept): ?>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold
-                                         bg-ui-surface border border-ui-border text-ui-subtext">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-ui-surface border border-ui-border text-ui-subtext">
                                 <?= esc_html(ucwords($concept)); ?>
                             </span>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
 
-                <!-- CTA -->
-                <div class="flex items-center gap-4 mb-6">
-
-                    <button
-                        class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold 
-                               <?= $is_locked
-                                    ? 'bg-ui-border text-ui-muted cursor-not-allowed'
-                                    : 'bg-brand-primary text-white hover:bg-blue-600'; ?>
-                               transition"
-                        id="playInlineTrigger">
-                        <i class="fa-solid fa-play"></i>
-                        <span>Listen</span>
-                    </button>
-
-                    <button class="w-11 h-11 rounded-full bg-ui-surface border border-ui-border text-ui-text 
-                                   hover:bg-ui-surfaceHover transition" id="bookmarkBtnTop">
-                        <i class="fa-regular fa-bookmark"></i>
-                    </button>
-
-                    <?php if (!$is_locked && $playbook_url): ?>
-                        <a href="<?= esc_url($playbook_url); ?>"
-                            class="w-11 h-11 rounded-full bg-ui-surface border border-ui-border text-ui-text 
-                                   flex items-center justify-center hover:bg-ui-surfaceHover transition"
-                            download>
-                            <i class="fa-solid fa-download"></i>
-                        </a>
-                    <?php else: ?>
-                        <button class="w-11 h-11 rounded-full bg-ui-border text-ui-muted border border-ui-border cursor-not-allowed">
-                            <i class="fa-solid fa-lock"></i>
-                        </button>
-                    <?php endif; ?>
-                </div>
-
                 <?php if ($is_locked): ?>
-                    <div class="text-sm text-ui-subtext font-medium mb-4">
+                    <p class="text-sm text-ui-subtext mt-4">
                         Premium membership required to access full audio + workbook.
-                    </div>
+                    </p>
                 <?php endif; ?>
 
             </div>
-
         </div>
     </section>
 
     <!-- PLAYER -->
-    <section class="my-8 md:my-12">
+    <section class="mb-16">
         <?php
         set_query_var('cw_audio_url', $audio_summary_url);
         set_query_var('cw_locked', $is_locked);
@@ -152,31 +114,46 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
 
     <!-- VALUE -->
     <?php if ($whats_in_it_for_you): ?>
-        <h2 class="text-2xl font-bold mb-4 text-ui-text">What’s in it for you</h2>
-        <p class="text-ui-textSoft mb-8 leading-relaxed">
-            <?= esc_html($whats_in_it_for_you); ?>
-        </p>
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-6">What’s in it for you</h2>
+            <p class="text-ui-textSoft leading-relaxed">
+                <?= esc_html($whats_in_it_for_you); ?>
+            </p>
+        </section>
     <?php endif; ?>
 
     <!-- QUOTE -->
     <?php if ($best_quote): ?>
-        <section class="my-12">
-            <blockquote class="border-l-4 border-brand-primary pl-6 py-2 text-xl italic text-ui-text">
+        <blockquote class="border-l-4 border-brand-primary pl-8 py-2 my-12">
+
+            <p class="text-2xl font-semibold leading-snug text-ui-text">
                 “<?= esc_html($best_quote); ?>”
-            </blockquote>
-        </section>
+            </p>
+
+            <?php if ($author): ?>
+                <cite class="block mt-4 text-ui-subtext font-medium not-italic">
+                    — <?= esc_html($author); ?>
+                </cite>
+            <?php endif; ?>
+
+        </blockquote>
     <?php endif; ?>
 
     <!-- TAKEAWAYS -->
     <?php if ($key_takeaways): ?>
-        <section class="bg-ui-surface border border-ui-border rounded-xl p-6 mb-10">
-            <h2 class="text-xl font-bold text-ui-text mb-4">Key Takeaways</h2>
+        <section class="bg-yellow-50 p-8 rounded-2xl mb-12">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-yellow-500"></i>
+                <span>Key Takeaways</span>
+            </h2>
 
-            <ul class="space-y-3 text-ui-subtext">
+            <ul class="space-y-4">
                 <?php foreach (preg_split('/\r\n|\r|\n/', $key_takeaways) as $line):
                     if (trim($line)): ?>
-                        <li class="flex gap-3">
-                            <span class="text-brand-primary mt-1"><i class="fa-solid fa-check"></i></span>
+                        <li class="flex gap-3 font-regular">
+                            <span class="text-yellow-500 mt-1">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </span>
                             <span><?= esc_html($line); ?></span>
                         </li>
                 <?php endif;
@@ -187,28 +164,36 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
 
     <!-- SUMMARY -->
     <?php if ($long_summary): ?>
-        <article class="prose max-w-none text-ui-textSoft">
+        <article class="prose max-w-none text-ui-textSoft mb-12">
             <?= wp_kses_post($long_summary); ?>
         </article>
     <?php endif; ?>
 
     <!-- CTA -->
     <section class="mt-16">
-        <?php if ($is_locked): ?>
-            <div class="bg-ui-surface border border-ui-border p-6 rounded-xl text-center">
-                <p class="text-ui-subtext mb-4">Workbook available for premium members.</p>
-                <a href="/membership"
-                    class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-primary text-white hover:bg-blue-600">
-                    Get Premium Access
-                </a>
+        <div class="bg-yellow-400 text-slate-900 p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+
+            <div>
+                <h3 class="text-xl font-bold mb-1">Deepen your understanding</h3>
+                <p class="text-slate-800">Download the workbook</p>
             </div>
-        <?php elseif ($playbook_url): ?>
-            <a href="<?= esc_url($playbook_url); ?>"
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-primary text-white hover:bg-blue-600 transition"
-                download>
-                Download Workbook <i class="fa-solid fa-download"></i>
-            </a>
-        <?php endif; ?>
+
+            <?php if (!$is_locked && $playbook_url): ?>
+                <a href="<?= esc_url($playbook_url); ?>"
+                    class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold no-underline hover:opacity-90 transition"
+                    download>
+                    <i class="fa-solid fa-download"></i>
+                    Download
+                </a>
+            <?php else: ?>
+                <a href="/membership"
+                    class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold no-underline hover:opacity-90 transition">
+                    <i class="fa-solid fa-lock"></i>
+                    Get Access
+                </a>
+            <?php endif; ?>
+
+        </div>
     </section>
 
 </main>

@@ -35,40 +35,67 @@ $is_locked = get_query_var('cw_locked');
 </div>
 
 <!-- Sticky Player -->
-<div id="cw-sticky-player"
-    class="fixed bottom-0 left-0 right-0 bg-ui-surface border-t border-ui-border shadow-md translate-y-full transition-transform duration-300 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+<div id="cw-sticky-player" class="fixed bottom-8 left-0 right-0 z-50 flex justify-center items-center px-4">
 
-        <div class="flex items-center gap-3">
-            <button id="cw-sticky-toggle" class="text-ui-text text-2xl">
-                <i class="fa-solid fa-chevron-up"></i>
-            </button>
+    <div class="w-full max-w-[720px] bg-white/70 backdrop-blur-xl rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-4 flex items-center justify-between gap-4">
 
-            <div>
-                <h4 class="text-sm font-bold text-ui-text"><?php the_title(); ?></h4>
-                <p class="text-xs text-ui-subtext">Playing…</p>
+        <!-- Book Info -->
+        <div class="hidden sm:flex items-center gap-3 w-1/4">
+            <?php if (get_field('book_cover_url')): ?>
+                <img src="<?= esc_url(get_field('book_cover_url')); ?>"
+                    class="w-10 h-10 rounded-lg object-cover">
+            <?php endif; ?>
+
+            <div class="truncate">
+                <p class="text-xs font-bold truncate"><?php the_title(); ?></p>
+                <p class="text-[10px] text-slate-500 uppercase tracking-widest">Listen</p>
             </div>
         </div>
 
-        <div class="flex items-center gap-4">
-            <button id="cw-sticky-back" class="text-ui-subtext hover:text-ui-text transition">
-                <i class="fa-solid fa-backward-15"></i>
+        <!-- Controls -->
+        <?php $skip = 10; // keep in sync with JS 
+        ?>
+
+        <div class="flex items-center justify-center gap-6 flex-1">
+
+            <!-- BACK -->
+            <button id="cw-sticky-back"
+                class="flex flex-col items-center text-slate-600 hover:text-brand-primary transition">
+                <i class="fa-solid fa-rotate-left text-lg"></i>
+                <span class="text-[10px] mt-1 uppercase tracking-tight">Back <?= $skip ?>s</span>
             </button>
 
+            <!-- PLAY -->
             <button id="cw-sticky-play"
-                class="w-10 h-10 bg-brand-primary text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition">
-                <i class="fa-solid fa-play" id="cw-sticky-icon"></i>
+                class="bg-brand-primary text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
+                <i class="fa-solid fa-play text-xl" id="cw-sticky-icon"></i>
             </button>
 
-            <button id="cw-sticky-forward" class="text-ui-subtext hover:text-ui-text transition">
-                <i class="fa-solid fa-forward-15"></i>
+            <!-- FORWARD -->
+            <button id="cw-sticky-forward"
+                class="flex flex-col items-center text-slate-600 hover:text-brand-primary transition">
+                <i class="fa-solid fa-rotate-right text-lg"></i>
+                <span class="text-[10px] mt-1 uppercase tracking-tight">Forward <?= $skip ?>s</span>
             </button>
+
         </div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end gap-3 w-1/4">
+            <button class="text-slate-400 hover:text-brand-primary">
+                <i class="fa-regular fa-bookmark"></i>
+            </button>
+
+            <button class="text-slate-400 hover:text-brand-primary">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <div class="h-8 w-[1px] bg-slate-200 mx-1"></div>
+
+        </div>
+
     </div>
 
-    <div class="h-1 bg-ui-bg w-full">
-        <div id="cw-sticky-progress" class="h-full bg-brand-primary w-0"></div>
-    </div>
 </div>
 
 <?php if (!$is_locked && $audio_url): ?>
@@ -85,9 +112,9 @@ $is_locked = get_query_var('cw_locked');
             const stickyBtn = document.getElementById('cw-sticky-play');
             const stickyIcon = document.getElementById('cw-sticky-icon');
             const stickyPanel = document.getElementById('cw-sticky-player');
-            const toggleSticky = document.getElementById('cw-sticky-toggle');
             const progressBar = document.getElementById('cw-sticky-progress');
             const durationEl = document.getElementById('cw-inline-duration');
+            const SKIP_SECONDS = 10; // change this to 5 / 15 anytime
 
             const ws = WaveSurfer.create({
                 container: '#cw-waveform',
@@ -120,12 +147,13 @@ $is_locked = get_query_var('cw_locked');
 
             ws.on('play', () => {
                 syncIcons(true);
-                stickyPanel.classList.remove('translate-y-full');
             });
 
             ws.on('pause', () => syncIcons(false));
 
             ws.on('audioprocess', () => {
+                if (!progressBar || !ws.getDuration()) return;
+
                 const p = ws.getCurrentTime() / ws.getDuration();
                 progressBar.style.width = `${p * 100}%`;
             });
@@ -134,15 +162,15 @@ $is_locked = get_query_var('cw_locked');
                 btn && btn.addEventListener('click', () => ws.playPause());
             });
 
-            toggleSticky.addEventListener('click', () => {
-                stickyPanel.classList.toggle('translate-y-full');
-            });
-
             document.getElementById('cw-sticky-back')
-                ?.addEventListener('click', () => ws.seekTo(Math.max(0, ws.getCurrentTime() - 10) / ws.getDuration()));
+                ?.addEventListener('click', () => {
+                    ws.seekTo(Math.max(0, ws.getCurrentTime() - SKIP_SECONDS) / ws.getDuration());
+                });
 
             document.getElementById('cw-sticky-forward')
-                ?.addEventListener('click', () => ws.seekTo(Math.min(ws.getDuration(), ws.getCurrentTime() + 10) / ws.getDuration()));
+                ?.addEventListener('click', () => {
+                    ws.seekTo(Math.min(ws.getDuration(), ws.getCurrentTime() + SKIP_SECONDS) / ws.getDuration());
+                });
 
         });
     </script>

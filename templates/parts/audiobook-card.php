@@ -57,19 +57,8 @@ $concepts = $concepts_raw
     <!-- Duration -->
     <?php if ($duration): ?>
         <p class="text-sm text-ui-subtext mt-2 relative z-20">
-            <?php echo esc_html($duration); ?> <span class="text-ui-muted">min</span>
+            <?php echo esc_html($duration); ?> min audio
         </p>
-    <?php endif; ?>
-
-    <!-- Concepts (optional, if you want later use) -->
-    <?php if (!empty($concepts)): ?>
-        <div class="flex flex-wrap gap-1 mt-2 relative z-20">
-            <?php foreach ($concepts as $concept): ?>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-ui-surface border border-ui-border text-ui-subtext">
-                    <?php echo esc_html($concept); ?>
-                </span>
-            <?php endforeach; ?>
-        </div>
     <?php endif; ?>
 
 </article>

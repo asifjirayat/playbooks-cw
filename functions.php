@@ -110,3 +110,24 @@ function cw_enqueue_assets()
     );
 }
 add_action('wp_enqueue_scripts', 'cw_enqueue_assets');
+
+
+/**
+ * Author aarchive
+ */
+function cw_register_query_vars($vars)
+{
+    $vars[] = 'cw_author';
+    return $vars;
+}
+add_filter('query_vars', 'cw_register_query_vars');
+
+function cw_author_rewrite_rule()
+{
+    add_rewrite_rule(
+        '^author/([^/]+)/?$',
+        'index.php?cw_author=$matches[1]',
+        'top'
+    );
+}
+add_action('init', 'cw_author_rewrite_rule');

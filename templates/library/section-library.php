@@ -22,7 +22,7 @@ if (empty($topics) || is_wp_error($topics)) {
         // Query audiobooks for this topic
         $books = new WP_Query([
             'post_type'      => 'audiobook',
-            'posts_per_page' => 4,
+            'posts_per_page' => 6,
             'tax_query'      => [
                 [
                     'taxonomy' => 'topics',
@@ -54,7 +54,7 @@ if (empty($topics) || is_wp_error($topics)) {
             </div>
 
             <!-- Audiobook Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
 
                 <?php
                 while ($books->have_posts()):

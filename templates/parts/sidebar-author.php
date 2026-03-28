@@ -51,7 +51,7 @@ $topic_counts = array_slice($topic_counts, 0, 6);
                 <li>
                     <a href="<?= esc_url(get_term_link($item['term'])); ?>"
                         class="flex items-center justify-between text-sm text-ui-textSoft
-                               hover:text-ui-text font-medium transition">
+                               hover:text-ui-text font-medium no-underline transition">
 
                         <span><?= esc_html($item['term']->name); ?></span>
 

@@ -8,25 +8,31 @@ get_header();
 
 // Current author from URL: /author/{slug}
 $author_slug = get_query_var('cw_author');
+
 $author_name = ucwords(str_replace('-', ' ', $author_slug));
 
-// Pagination
-$paged = max(1, get_query_var('paged') ?: get_query_var('page'));
+// Break into parts (jordan, b, peterson)
+$author_parts = explode(' ', str_replace('-', ' ', $author_slug));
 
-// Query audiobooks by author ACF field
+$meta_query = ['relation' => 'AND'];
+
+foreach ($author_parts as $part) {
+    if (!empty($part)) {
+        $meta_query[] = [
+            'key'     => 'book_author',
+            'value'   => $part,
+            'compare' => 'LIKE',
+        ];
+    }
+}
+
 $query = new WP_Query([
     'post_type'      => 'audiobook',
     'posts_per_page' => 20,
     'paged'          => $paged,
-    'no_found_rows'  => false,
-    'meta_query'     => [
-        [
-            'key'     => 'book_author',
-            'value'   => $author_name,
-            'compare' => 'LIKE',
-        ],
-    ],
+    'meta_query'     => $meta_query,
 ]);
+
 ?>
 
 <main class="pb-24">
@@ -38,7 +44,7 @@ $query = new WP_Query([
             <!-- Breadcrumb -->
             <div class="text-xs font-medium text-ui-subtext uppercase tracking-wider mb-4">
                 <a href="<?php echo esc_url(home_url('/library')); ?>"
-                    class="hover:text-ui-text transition">
+                    class="hover:text-ui-text no-underline transition">
                     Library
                 </a>
                 <span class="mx-2">/</span>

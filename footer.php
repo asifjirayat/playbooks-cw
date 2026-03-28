@@ -1,4 +1,4 @@
-<footer class="border-t border-ui-border bg-ui-surface mt-24">
+<footer class="border-t border-ui-border bg-ui-surface mt-8">
     <div class="max-w-6xl mx-auto px-4 py-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-ui-subtext">
 
         <!-- Branding -->
