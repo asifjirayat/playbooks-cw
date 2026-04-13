@@ -19,6 +19,8 @@
                         },
                         ui: {
                             bg: '#ffffff',
+                            bgYellow: '#fff8e5',
+                            bgYellowIcon: '#ffbc00',
 
                             surface: '#f8fafc',
                             surfaceHover: '#f1f5f9',
@@ -30,6 +32,7 @@
                             textSoft: '#334155',
                             subtext: '#64748b',
                             muted: '#94a3b8',
+                            textTertiary: '#956d00',
                         }
                     }
                 }

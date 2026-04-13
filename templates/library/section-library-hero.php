@@ -30,23 +30,19 @@ if (!$today || empty($today->ID)) return;
 $id = $today->ID;
 
 // Fields (safe extraction)
-$eyebrow = '';
 $title_field = '';
 $desc = '';
 
 if (function_exists('get_field')) {
-    $eyebrow_raw = get_field('eyebrow', $id);
     $title_raw   = get_field('title', $id);
     $desc_raw    = get_field('short_description', $id);
 
-    if (is_string($eyebrow_raw)) $eyebrow = $eyebrow_raw;
     if (is_string($title_raw))   $title_field = $title_raw;
     if (is_string($desc_raw))    $desc = $desc_raw;
 }
 
 // Final values
 $title   = $title_field ?: get_the_title($id);
-$eyebrow = $eyebrow ?: 'Summary of the Day';
 
 // Safe URL handling
 $link = '';
@@ -83,7 +79,7 @@ $link = $link ?: get_permalink($id);
 
         <!-- Eyebrow -->
         <span class="text-xs uppercase tracking-[0.3em] text-yellow-400 mb-4">
-            <?= esc_html($eyebrow); ?>
+            Summary of the Day
         </span>
 
         <!-- Title -->

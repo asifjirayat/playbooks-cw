@@ -13,6 +13,7 @@ $playbook_url        = get_field('playbook_url') ?: '';
 $whats_in_it_for_you = get_field('whats_in_it_for_you') ?: '';
 $long_summary        = get_field('long_summary') ?: '';
 $author              = get_field('book_author') ?: 'Unknown Author';
+$amazon_link         = get_field('amazon_link') ?: '';
 $listening_time      = get_field('listening_time') ?: '';
 $rank                = get_field('rank') ?: '';
 $best_quote          = get_field('best_quote') ?: '';
@@ -123,7 +124,7 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
     <!-- VALUE -->
     <?php if ($whats_in_it_for_you): ?>
         <section class="mb-12">
-            <h2 class="text-3xl font-bold mb-6">What’s in it for you</h2>
+            <h2 class="text-3xl text-ui-textSoft font-bold mb-6">The Core Lesson</h2>
             <p class="text-ui-textSoft leading-relaxed">
                 <?= esc_html($whats_in_it_for_you); ?>
             </p>
@@ -149,18 +150,18 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
 
     <!-- TAKEAWAYS -->
     <?php if ($key_takeaways): ?>
-        <section class="bg-yellow-50 p-8 rounded-2xl mb-12">
-            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <i class="fa-solid fa-lightbulb text-yellow-500"></i>
+        <section class="bg-ui-bgYellow p-8 rounded-2xl mb-12">
+            <h2 class="text-xl text-ui-textTertiary font-bold mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb"></i>
                 <span>Key Takeaways</span>
             </h2>
 
             <ul class="space-y-4">
                 <?php foreach (preg_split('/\r\n|\r|\n/', $key_takeaways) as $line):
                     if (trim($line)): ?>
-                        <li class="flex gap-3 font-regular">
-                            <span class="text-yellow-500 mt-1">
-                                <i class="fa-solid fa-circle-check"></i>
+                        <li class="flex items-start gap-3 font-regular">
+                            <span class="text-ui-bgYellowIcon mt-[2px]">
+                                <i class="fa-solid fa-circle-check text-xl"></i>
                             </span>
                             <span><?= esc_html($line); ?></span>
                         </li>
@@ -173,6 +174,7 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
     <!-- SUMMARY -->
     <?php if ($long_summary): ?>
         <article class="prose max-w-none text-ui-textSoft mb-12">
+            <h2 class="text-3xl font-bold mb-6">The Executive Summary</h2>
             <?= wp_kses_post($long_summary); ?>
         </article>
     <?php endif; ?>
@@ -183,7 +185,7 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
 
             <div>
                 <h3 class="text-xl font-bold mb-1">Deepen your understanding</h3>
-                <p class="text-slate-800">Download the workbook</p>
+                <p class="text-slate-800">Download the <span class="font-bold">"<?php the_title(); ?>"</span> workbook.</p>
             </div>
 
             <?php if (!$is_locked && $playbook_url): ?>
@@ -200,6 +202,37 @@ $concepts = array_filter(array_map('trim', preg_split('/,|\r\n|\r|\n/', $concept
                     Get Access
                 </a>
             <?php endif; ?>
+
+        </div>
+    </section>
+
+    <!-- ORIGINAL BOOK CTA -->
+    <section class="mt-12">
+        <div class="bg-ui-bgYellow border border-ui-border rounded-2xl p-8 flex flex-col md:flex-row items-center gap-6">
+
+            <!-- Content -->
+            <div class="flex-1 text-center md:text-left">
+
+                <h3 class="text-2xl font-bold text-ui-textTertiary mb-3 flex items-center justify-center md:justify-start gap-2">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Dive Deeper into the Original Work</span>
+                </h3>
+
+                <p class="text-ui-textSoft leading-relaxed mb-5 max-w-xl mx-auto md:mx-0">
+                    A summary can only scratch the surface. To truly grasp the depth of research, real-world examples, and the author's unique voice, there is no substitute for the full book.
+                </p>
+
+                <p class="text-ui-subtext text-sm mb-6">
+                    If these insights resonated with you, we recommend exploring the original text.
+                </p>
+
+                <a href="<?= esc_url($amazon_link ?: '#'); ?>" target="_blank"
+                    class="inline-flex items-center gap-2 bg-brand-yellow text-black px-6 py-3 rounded-full font-semibold no-underline hover:opacity-90 transition shadow">
+                    <i class="fa-brands fa-amazon mt-1"></i>
+                    Get the Full Book on Amazon
+                </a>
+
+            </div>
 
         </div>
     </section>
